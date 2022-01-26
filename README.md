@@ -1,4 +1,4 @@
-# adyen-testing-suite
+# Adyen Testing suite
 
 End-to-end testing of Adyen sample applications using [Playwright](https://playwright.dev/)
 
