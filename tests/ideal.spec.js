@@ -15,13 +15,15 @@ test('iDEAL', async ({ page }) => {
     await page.click('text="Continue to checkout"');
     await expect(page.locator('text="Select your bank"')).toBeVisible();
 
-//  await page.locator("input[data-fieldtype='encryptedCardNumber']").type("1234");
-//  await page.locator('input[data-fieldtype="encryptedCardNumber"]').type('1234');
+    // Select bank
+    await page.click('text="Select your bank"');
+    // Choose Test Issuer
+    const element = page.locator('input[aria-autocomplete="list"]');
+    await element.type('Test Issuer');
+    await element.press('Enter');
 
-//  await page.locator('button:has-text("Pay €10.00")').click();
-
-//  let listItems = page.locator('li[class="adyen-checkout__dropdown__element"]');
-//  console.log(listItems.nth(1).click());
-
+    // click "Continue"
+    await page.click('text="Continue to Test Issuer"');
+    await expect(page.locator('text="iDEAL Issuer Simulation"')).toBeVisible();
 
 });
