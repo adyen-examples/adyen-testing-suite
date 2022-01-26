@@ -1,6 +1,6 @@
 # adyen-testing-suite
 
-End-to-end testing of Adyen sample applications
+End-to-end testing of Adyen sample applications using [Playwright](https://playwright.dev/)
 
 ## Pre-requisites
 
