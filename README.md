@@ -16,6 +16,12 @@ Execute tests headless (default)
 npx playwright test
 ```
 
+Execute single test (ie matching filename)
+
+```
+npx playwright test webhook 
+```
+
 Execute tests with open browser 
 
 ```
