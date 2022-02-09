@@ -21,10 +21,10 @@ test('Dropin SEPA', async ({ page }) => {
     await page.locator('button[aria-label="SEPA Direct Debit"]').click();
     await page.fill('input[name="sepa.ownerName"]', "A. Klaassen");
     await page.fill('input[name="sepa.ibanNumber"]', "NL13TEST0123456789");
+
     // click "Pay"
-    // select second button matching the given selector
-    elem = page.locator(':nth-match(button:has-text("Pay €10.00"), 2)');
-    await expect.toBeVisible();
+    elem = page.locator('button:has-text("Pay €10.00") >> visible=true');
+    await expect(elem).toBeVisible();
     await elem.click();
 
     await expect(page.locator('text="Return Home"')).toBeVisible();
