@@ -7,8 +7,16 @@ End-to-end testing of Adyen sample applications using [Playwright](https://playw
 * Node 17+
 * Run sample application on `localhost:8080`
 
-## Run test suite
+## Install Playwright
 
+Add dependency and install browsers. See [Installation](https://playwright.dev/docs/intro) page
+```
+  npm i -D @playwright/test
+  # install supported browsers
+  npx playwright install
+```
+
+## Run test suite
 
 Execute tests headless (default)
 
