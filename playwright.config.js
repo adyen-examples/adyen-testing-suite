@@ -11,7 +11,7 @@ const config = {
   testDir: './tests',
 
   /* Maximum time one test can run for. */
-  timeout: 5 * 1000,
+  timeout: 15 * 1000,
 
   expect: {
 
