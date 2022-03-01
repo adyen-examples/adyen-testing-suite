@@ -25,7 +25,7 @@ Add Playwright dependency and install the browsers.
 
 More info on Playwright [Installation](https://playwright.dev/docs/intro) page
 
-## Run test suite
+### Run test suite
 
 Execute tests headless (default)
 
@@ -45,3 +45,15 @@ Execute tests with open browser
 npx playwright test --headed 
 ```
 
+## Run Docker Image
+
+### Pre-requisites
+
+* Docker
+* Start sample application on `localhost:8080`
+* Make sure the sample application uses English language 
+
+```
+  # run on Mac (i.e. --platform linux/arm64/v8)
+  docker run -t -i --rm --name adyen-testing-suite --network host --platform linux/arm64/v8 ghcr.io/adyen-examples/adyen-testing-suite:main
+```
