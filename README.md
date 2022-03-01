@@ -2,12 +2,19 @@
 
 End-to-end testing of Adyen sample applications using [Playwright](https://playwright.dev/)
 
-## Pre-requisites
+It can be executed in 2 ways:
+- Install and run Playwright tests on Node
+- Run the `ghcr.io/adyen-examples/adyen-testing-suite` Docker image
+
+## Run in Node
+
+### Pre-requisites
 
 * Node 17+
-* Run sample application on `localhost:8080`
+* Start sample application on `localhost:8080`
+* Make sure the sample application uses English language 
 
-## Install Playwright
+### Install Playwright
 
 Add Playwright dependency and install the browsers. 
 ```
