@@ -9,12 +9,14 @@ End-to-end testing of Adyen sample applications using [Playwright](https://playw
 
 ## Install Playwright
 
-Add dependency and install browsers. See [Installation](https://playwright.dev/docs/intro) page
+Add Playwright dependency and install the browsers. 
 ```
   npm i -D @playwright/test
   # install supported browsers
   npx playwright install
 ```
+
+More info on Playwright [Installation](https://playwright.dev/docs/intro) page
 
 ## Run test suite
 
