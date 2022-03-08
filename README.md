@@ -47,13 +47,21 @@ npx playwright test --headed
 
 ## Run Docker Image
 
+Run the adyen-testing-suite in a Docker container which connects to the localhost application.
+
+Note: the localhost application will resolve to `http://docker:8080` from inside the Docker container
+
+
 ### Pre-requisites
 
 * Docker
 * Start sample application on `localhost:8080`
 * Make sure the sample application uses English language 
+* Add `http://docker:8080` to Allow origins
+
 
 ```
   # run on Mac (i.e. --platform linux/arm64/v8)
-  docker run -t -i --rm --name adyen-testing-suite --network host --platform linux/arm64/v8 ghcr.io/adyen-examples/adyen-testing-suite:main
+  # NOTE!! Set <host IP address> before executing docker run
+  docker run -t -i --rm --name adyen-testing-suite -e URL=http://docker:8080 --add-host=docker:<host IP address> --platform linux/arm64/v8 ghcr.io/adyen-examples/adyen-testing-suite:main
 ```
