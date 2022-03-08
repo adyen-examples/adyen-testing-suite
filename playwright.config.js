@@ -37,7 +37,7 @@ const config = {
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
 
-    baseURL: 'http://localhost:8080',
+    baseURL: process.env.URL || 'http://localhost:8080',
 
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
