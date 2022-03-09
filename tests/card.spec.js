@@ -4,8 +4,6 @@ const { test, expect } = require('@playwright/test');
 
 test('Card', async ({ page, baseURL }) => {
 
-    console.log('Card baseURL: ' + baseURL);
-
     await page.goto('/');
 
     await expect(page).toHaveTitle(/Checkout Demo/);
