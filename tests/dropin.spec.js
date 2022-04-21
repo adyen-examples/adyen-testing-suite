@@ -19,8 +19,8 @@ test('Dropin SEPA', async ({ page }) => {
 
     // select SEPA
     await page.locator('button[aria-label="SEPA Direct Debit"]').click();
-    await page.fill('input[name="sepa.ownerName"]', "A. Klaassen");
-    await page.fill('input[name="sepa.ibanNumber"]', "NL13TEST0123456789");
+    await page.fill('input[name="ownerName"]', "A. Klaassen");
+    await page.fill('input[name="ibanNumber"]', "NL13TEST0123456789");
 
     // click "Pay"
     elem = page.locator('button:has-text("Pay €10.00") >> visible=true');
