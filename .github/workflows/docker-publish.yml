@@ -3,6 +3,8 @@ name: Push to Github Packages
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
 
 env:
   REGISTRY: ghcr.io
