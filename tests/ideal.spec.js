@@ -22,8 +22,12 @@ test('iDEAL', async ({ page }) => {
     await element.type('Test Issuer');
     await element.press('Enter');
 
-    // click "Continue"
+    // click "Continue to Test Issuer"
     await page.click('text="Continue to Test Issuer"');
     await expect(page.locator('text="iDEAL Issuer Simulation"')).toBeVisible();
+
+    // click "Continue"
+    await page.click('text="Continue"');
+    await expect(page.locator('text="Return Home"')).toBeVisible();
 
 });

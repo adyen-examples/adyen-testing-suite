@@ -31,7 +31,9 @@ test('Webhook Notification', async ({ request }) => {
 
     // verify notification is not accepted (invalid HMAC)
 
-    // Status code not 200
+    // Status code not 404 (verify webhook is found)
+    expect(notifications.status()).not.toEqual(404);
+    // Status code not 200 (verify webhook does not accept the notification ie HMAC invalid)
     expect(notifications.status()).not.toEqual(200);
     // Body not [accepted]
     notifications.text()
