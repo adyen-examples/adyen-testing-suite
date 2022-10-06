@@ -23,7 +23,7 @@ test('Dropin SEPA', async ({ page }) => {
     await page.fill('input[name="ibanNumber"]', "NL13TEST0123456789");
 
     // click "Pay"
-    elem = page.locator('button:has-text("Pay €10.00") >> visible=true');
+    const elem = page.locator('button:has-text("Pay €10.00") >> visible=true');
     await expect(elem).toBeVisible();
     await elem.click();
 
