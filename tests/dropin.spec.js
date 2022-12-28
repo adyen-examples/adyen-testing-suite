@@ -18,7 +18,7 @@ test('Dropin SEPA', async ({ page }) => {
     await expect(page.locator('text="SEPA Direct Debit"')).toBeVisible();
 
     // select SEPA
-    await page.locator('button[aria-label="SEPA Direct Debit"]').click();
+    await page.locator('button[id^="button-sepadirectdebit"]').click();
     await page.fill('input[name="ownerName"]', "A. Klaassen");
     await page.fill('input[name="ibanNumber"]', "NL13TEST0123456789");
 
