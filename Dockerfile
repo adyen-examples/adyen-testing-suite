@@ -13,5 +13,5 @@ WORKDIR /e2e
 RUN npm install
 RUN npx playwright install
 
-# Run `npx playwright test $FOLDERNAME`
+# Run command `npx playwright test $PLAYWRIGHT_FOLDERNAME`
 CMD npx playwright test ${PLAYWRIGHT_FOLDERNAME} --reporter=list
