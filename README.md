@@ -27,16 +27,22 @@ More info on Playwright [Installation](https://playwright.dev/docs/intro) page
 
 ### Run test suite
 
-Execute tests headless (default)
+Execute all tests headless (default)
 
 ```
 npx playwright test
 ```
 
-Execute single test (ie matching filename)
+Execute single test (i.e. matching filename)
 
 ```
 npx playwright test webhook 
+```
+
+Execute tests in folder (i.e. matching foldername)
+
+```
+npx playwright test checkout 
 ```
 
 Execute tests with open browser 
