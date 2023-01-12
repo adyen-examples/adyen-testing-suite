@@ -1,6 +1,6 @@
 # Adyen Testing suite
 
-End-to-end testing of Adyen sample applications using [Playwright](https://playwright.dev/)
+End-to-end testing of Adyen sample applications using [Playwright](https://playwright.dev/).
 
 It can be executed in 2 ways:
 - Install and run Playwright tests on Node
@@ -23,20 +23,26 @@ Add Playwright dependency and install the browsers.
   npx playwright install
 ```
 
-More info on Playwright [Installation](https://playwright.dev/docs/intro) page
+More info on Playwright [Installation](https://playwright.dev/docs/intro) page.
 
 ### Run test suite
 
-Execute tests headless (default)
+Execute all tests headless (default)
 
 ```
 npx playwright test
 ```
 
-Execute single test (ie matching filename)
+Execute single test (i.e. matching filename)
 
 ```
 npx playwright test webhook 
+```
+
+Execute tests in folder (i.e. matching foldername)
+
+```
+npx playwright test checkout 
 ```
 
 Execute tests with open browser 
@@ -49,7 +55,7 @@ npx playwright test --headed
 
 Run the adyen-testing-suite in a Docker container which connects to the localhost application.
 
-Note: the localhost application will resolve to `http://docker:8080` from inside the Docker container
+Note: the localhost application will resolve to `http://docker:8080` from inside the Docker container.
 
 
 ### Pre-requisites
@@ -63,5 +69,5 @@ Note: the localhost application will resolve to `http://docker:8080` from inside
 ```
   # run on Mac (i.e. --platform linux/arm64/v8)
   # NOTE!! Set <host IP address> before executing docker run
-  docker run -t -i --rm --name adyen-testing-suite -e URL=http://docker:8080 --add-host=docker:<host IP address> --platform linux/arm64/v8 ghcr.io/adyen-examples/adyen-testing-suite:main
+  docker run -t -i --rm --name adyen-testing-suite -e URL=http://docker:8080 -e PLAYWRIGHT_FOLDERNAME=checkout --add-host=docker:<host IP address> --platform linux/arm64/v8 ghcr.io/adyen-examples/adyen-testing-suite:main
 ```
