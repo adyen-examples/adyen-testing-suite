@@ -15,4 +15,4 @@ RUN npm install
 RUN npx playwright install
 
 # Run `npx playwright $FOLDERNAME`
-CMD [ "npx", "playwright", "$PLAYWRIGHT_FOLDERNAME", "--reporter=list" ]
+CMD [ "npx", "playwright", "test", "$PLAYWRIGHT_FOLDERNAME", "--reporter=list" ]
