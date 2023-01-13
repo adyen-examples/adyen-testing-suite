@@ -1,15 +1,15 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-
-test('Card', async ({ page }) => {
+// SEPA payment
+test('Dropin Card', async ({ page }) => {
     await page.goto('/');
 
     await expect(page).toHaveTitle("Adyen Subscription Shopper View");
     await expect(page.locator('text="SHOPPER VIEW"')).toBeVisible();
 
-    // Select Card
-    await page.locator('text="Card"').click();
+    // Select "Drop-in"
+    await page.locator('text="Drop-in"').click();
     await expect(page.locator('text="SUBSCRIPTION DETAILS"')).toBeVisible();
 
     // Click "Continue to confirm subscription"
@@ -18,6 +18,11 @@ test('Card', async ({ page }) => {
 
     // Locate iframe
     const frame = page.frameLocator('iframe');
+    
+    // Select "Credit or debit card"
+    //const selector = frame.first().getByRole('button', { name: 'Credit or debit card' })
+    //console.log(selector);
+    //await selector.click();
 
     // Find and fill "Card number" field
     const cardNumberField = frame.nth(0).getByPlaceholder('1234 5678 9012 3456');

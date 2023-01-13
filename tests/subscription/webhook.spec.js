@@ -1,7 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-
 test('Webhook Notification', async ({ request }) => {
     const notifications = await request.post(`/api/webhooks/notifications`, {
         data: {

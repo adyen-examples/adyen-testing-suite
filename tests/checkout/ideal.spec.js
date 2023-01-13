@@ -29,5 +29,4 @@ test('iDEAL', async ({ page }) => {
     // click "Continue"
     await page.click('text="Continue"');
     await expect(page.locator('text="Return Home"')).toBeVisible();
-
 });

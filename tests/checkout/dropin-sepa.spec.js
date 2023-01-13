@@ -22,9 +22,9 @@ test('Dropin SEPA', async ({ page }) => {
     await page.fill('input[name="ibanNumber"]', "NL13TEST0123456789");
 
     // Click "Pay"
-    const elem = page.locator('.adyen-checkout__button.adyen-checkout__button--pay >> visible=true');
-    await expect(elem).toBeVisible();
-    await elem.click();
+    const payButton = page.locator('.adyen-checkout__button.adyen-checkout__button--pay >> visible=true');
+    await expect(payButton).toBeVisible();
+    await payButton.click();
 
     await expect(page.locator('text="Return Home"')).toBeVisible();
 });
