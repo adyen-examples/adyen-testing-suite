@@ -9,7 +9,9 @@ test('Webhook Notification', async ({ request }) => {
                 {
                     "NotificationRequestItem":{
                         "additionalData":{
-                            "hmacSignature":"+JWKfq4ynALK+FFzGgHnp1jSMQJMBJeb87dlph24sXw="
+                            "hmacSignature":"+JWKfq4ynALK+FFzGgHnp1jSMQJMBJeb87dlph24sXw=",
+                            "recurring.recurringDetailReference":"XXXXXXXXX",
+                            "recurring.shopperReference": "UniqueShopperReference"
                         },
                         "eventCode":"AUTHORISATION",
                         "success":"true",
@@ -18,7 +20,7 @@ test('Webhook Notification', async ({ request }) => {
                         "pspReference": "7914073381342284",
                         "merchantReference": "YOUR_REFERENCE",
                         "amount": {
-                            "value":1130,
+                            "value":0,
                             "currency":"EUR"
                         }
                     }
