@@ -14,7 +14,7 @@ test('Dropin Card', async ({ page }) => {
 
     // Click "Continue to confirm subscription"
     await page.click('text="Continue to confirm subscription"');
-    await expect(page.locator('text="Card number"')).toBeVisible();
+    await expect(page.locator('text="Credit or debit card"')).toBeVisible();
 
     // Locate iframe
     const frame = page.frameLocator('iframe');
