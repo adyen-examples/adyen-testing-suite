@@ -20,7 +20,6 @@ test('Dropin Card', async ({ page }) => {
     const frame = page.frameLocator('iframe');
     
     // Select "Credit or debit card"
-    // Select "Credit or debit card"
     await page.click('[aria-label="Credit or debit card"]');
     await expect(page.locator('[aria-label="Credit or debit card"]')).toHaveAttribute('aria-expanded', 'true');
 
