@@ -20,9 +20,9 @@ test('Dropin Card', async ({ page }) => {
     const frame = page.frameLocator('iframe');
     
     // Select "Credit or debit card"
-    //const selector = frame.first().getByRole('button', { name: 'Credit or debit card' })
-    //console.log(selector);
-    //await selector.click();
+    // Select "Credit or debit card"
+    await page.click('[aria-label="Credit or debit card"]');
+    await expect(page.locator('[aria-label="Credit or debit card"]')).toHaveAttribute('aria-expanded', 'true');
 
     // Find and fill "Card number" field
     const cardNumberField = frame.nth(0).getByPlaceholder('1234 5678 9012 3456');
@@ -36,8 +36,7 @@ test('Dropin Card', async ({ page }) => {
     const cvcField = page.frameLocator('iframe').nth(2).getByPlaceholder('3 digits');
     await cvcField.fill('737');
     
-    // Find and fill "Name on card" field
-    //const nameOnCardField = page.frameLocator('iframe').nth(3).getByPlaceholder('J. Smith');
+    // Find and fill "Name on card" field - Note: this field is not contained within an iframe
     const nameOnCardField = page.getByPlaceholder('J. Smith');
     await nameOnCardField.fill('J. Smith');
 

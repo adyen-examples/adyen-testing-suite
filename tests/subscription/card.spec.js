@@ -31,8 +31,7 @@ test('Card', async ({ page }) => {
     const cvcField = page.frameLocator('iframe').nth(2).getByPlaceholder('3 digits');
     await cvcField.fill('737');
     
-    // Find and fill "Name on card" field
-    //const nameOnCardField = page.frameLocator('iframe').nth(3).getByPlaceholder('J. Smith');
+    // Find and fill "Name on card" field - Note: this field is not contained within an iframe
     const nameOnCardField = page.getByPlaceholder('J. Smith');
     await nameOnCardField.fill('J. Smith');
 
