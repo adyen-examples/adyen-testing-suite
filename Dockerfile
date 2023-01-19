@@ -11,7 +11,7 @@ WORKDIR /e2e
 
 # Install dependencies
 RUN npm install
-RUN npx playwright install
+RUN npx playwright install chromium
 
 # Run command `npx playwright test $PLAYWRIGHT_FOLDERNAME`
 CMD npx playwright test ${PLAYWRIGHT_FOLDERNAME} --reporter=list
