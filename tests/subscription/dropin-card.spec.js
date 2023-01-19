@@ -28,11 +28,11 @@ test('Dropin Card', async ({ page }) => {
     await cardNumberField.fill('4166 6766 6766 6746');
     
     // Find and fill "Expiry date" field
-    const expiryDateField = page.frameLocator('iframe').nth(1).getByPlaceholder("MM/YY");
+    const expiryDateField = frame.nth(1).getByPlaceholder("MM/YY");
     await expiryDateField.fill('03/30');
     
     // Find and fill "CVC / CVV" field
-    const cvcField = page.frameLocator('iframe').nth(2).getByPlaceholder('3 digits');
+    const cvcField = frame.nth(2).getByPlaceholder('3 digits');
     await cvcField.fill('737');
     
     // Find and fill "Name on card" field - Note: this field is not contained within an iframe
