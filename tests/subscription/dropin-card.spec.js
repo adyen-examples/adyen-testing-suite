@@ -14,12 +14,11 @@ test('Dropin Card', async ({ page }) => {
 
     // Click "Continue to confirm subscription"
     await page.click('text="Continue to confirm subscription"');
-    await expect(page.locator('text="Card number"')).toBeVisible();
+    await expect(page.locator('text="Credit or debit card"')).toBeVisible();
 
     // Locate iframe
     const frame = page.frameLocator('iframe');
     
-    // Select "Credit or debit card"
     // Select "Credit or debit card"
     await page.click('[aria-label="Credit or debit card"]');
     await expect(page.locator('[aria-label="Credit or debit card"]')).toHaveAttribute('aria-expanded', 'true');
