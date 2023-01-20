@@ -1,14 +1,13 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-
 test('Card', async ({ page }) => {
     await page.goto('/');
 
     await expect(page).toHaveTitle("Adyen Subscription Shopper View");
     await expect(page.locator('text="SHOPPER VIEW"')).toBeVisible();
 
-    // Select Card
+    // Select "Card"
     await page.getByRole('link', { name: 'Card' }).click();
     await expect(page.locator('text="SUBSCRIPTION DETAILS"')).toBeVisible();
 
