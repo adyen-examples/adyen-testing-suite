@@ -9,31 +9,27 @@ test('Card', async ({ page }) => {
     await expect(page.locator('text="SHOPPER VIEW"')).toBeVisible();
 
     // Select Card
-    await page.locator('text="Card"').click();
+    await page.getByRole('link', { name: 'Card' }).click();
     await expect(page.locator('text="SUBSCRIPTION DETAILS"')).toBeVisible();
 
     // Click "Continue to confirm subscription"
-    await page.click('text="Continue to confirm subscription"');
+    await page.getByRole('link', { name: 'Continue to confirm subscription' }).click();
     await expect(page.locator('text="Card number"')).toBeVisible();
+    
+    // Find iframe and fill "Card number" field
+    const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4166 6766 6766 6746');
 
-    // Locate iframe
-    const frame = page.frameLocator('iframe');
+    // Find iframe and fill "Expiry date" field
+    const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');
+    await expiryDateFrame.getByPlaceholder('MM/YY').fill('03/30');
 
-    // Find and fill "Card number" field
-    const cardNumberField = frame.nth(0).getByPlaceholder('1234 5678 9012 3456');
-    await cardNumberField.fill('4166 6766 6766 6746');
-    
-    // Find and fill "Expiry date" field
-    const expiryDateField = frame.nth(1).getByPlaceholder("MM/YY");
-    await expiryDateField.fill('03/30');
-    
-    // Find and fill "CVC / CVV" field
-    const cvcField = frame.nth(2).getByPlaceholder('3 digits');
-    await cvcField.fill('737');
-    
+    // Find iframe and fill "CVC / CVV" field
+    const cvcFrame = page.frameLocator('internal:attr=[title="Iframe for secured card security code"i]');
+    await cvcFrame.getByPlaceholder('3 digits').fill('737');
+   
     // Find and fill "Name on card" field - Note: this field is not contained within an iframe
-    const nameOnCardField = page.getByPlaceholder('J. Smith');
-    await nameOnCardField.fill('J. Smith');
+    await page.getByPlaceholder('J. Smith').fill('J. Smith');
 
     // Click "Confirm preauthorization"
     const confirmButton = page.locator('.adyen-checkout__button__text >> visible=true');
