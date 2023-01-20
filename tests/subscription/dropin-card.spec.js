@@ -1,7 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-// SEPA payment
 test('Dropin Card', async ({ page }) => {
     await page.goto('/');
 
