@@ -8,7 +8,7 @@ test('Card', async ({ page }) => {
     await expect(page.locator('text="Select a demo"')).toBeVisible();
 
     // Select "Card"
-    await page.getByRole('link', { name: 'Card' }).click();
+    await page.getByRole('link', { name: 'Card', exact: true }).click();
     await expect(page.locator('text="Cart"')).toBeVisible();
 
     // Click "Continue to checkout"
