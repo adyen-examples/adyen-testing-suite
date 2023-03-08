@@ -15,9 +15,8 @@ test('Dropin Card', async ({ page }) => {
     await page.getByRole('link', { name: 'Continue to confirm subscription' }).click();
     await expect(page.locator('text="Credit or debit card"')).toBeVisible();
     
-    // Select "Credit or debit card"
-    await page.getByRole('button', { name: 'Credit or debit card' }).click();
-    await expect(page.locator('[aria-label="Credit or debit card"]')).toHaveAttribute('aria-expanded', 'true');
+    // Click "Credit or debit card"
+    await page.getByRole('radio', { name: 'Credit or debit card' }).click();
     
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
