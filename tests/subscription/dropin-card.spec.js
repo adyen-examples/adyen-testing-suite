@@ -14,10 +14,17 @@ test('Dropin Card', async ({ page }) => {
     // Click "Continue to confirm subscription"
     await page.getByRole('link', { name: 'Continue to confirm subscription' }).click();
     await expect(page.locator('text="Credit or debit card"')).toBeVisible();
-    
-    // Select "Credit or debit card"
-    await page.getByRole('button', { name: 'Credit or debit card' }).click();
-    await expect(page.locator('[aria-label="Credit or debit card"]')).toHaveAttribute('aria-expanded', 'true');
+
+    // Click "Credit or debit card"
+    const radioButton = await page.getByRole('radio', { name: 'Credit or debit card' });
+    if (await radioButton.count() === 0) {
+        // Click normal button for < Adyen-Web 5.32.x or lower
+        await page.getByRole('button', { name: 'Credit or debit card' }).click();
+    }
+    else {
+        // Click radio button for > Adyen-Web 5.33.x or higher
+        await radioButton.click();
+    }
     
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
