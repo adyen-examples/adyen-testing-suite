@@ -17,7 +17,7 @@ test('Card', async ({ page }) => {
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle');
     
-    // Assert that "Card number" is visible within iframe.
+    // Assert that "Card number" is visible within iframe
     await expect(page.locator('text="Card number"')).toBeVisible();
     
     // Find iframe and fill "Card number" field
