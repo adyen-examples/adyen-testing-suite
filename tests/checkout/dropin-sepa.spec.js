@@ -12,8 +12,12 @@ test('Dropin SEPA', async ({ page }) => {
     await expect(page.locator('text="Cart"')).toBeVisible();
 
     // Click "Continue to checkout"
-    
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
+    
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+    
+    // Assert that "SEPA Direct Debit" is visible
     await expect(page.locator('text="SEPA Direct Debit"')).toBeVisible();
 
     // Select "SEPA"
@@ -25,6 +29,9 @@ test('Dropin SEPA', async ({ page }) => {
     const payButton = page.locator('.adyen-checkout__button.adyen-checkout__button--pay >> visible=true');
     await expect(payButton).toBeVisible();
     await payButton.click();
-
+    
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+    
     await expect(page.locator('text="Return Home"')).toBeVisible();
 });

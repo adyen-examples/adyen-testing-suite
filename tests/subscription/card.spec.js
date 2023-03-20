@@ -13,6 +13,11 @@ test('Card', async ({ page }) => {
 
     // Click "Continue to confirm subscription"
     await page.getByRole('link', { name: 'Continue to confirm subscription' }).click();
+    
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+    
+    // Assert that "Card number" is visible within iframe.
     await expect(page.locator('text="Card number"')).toBeVisible();
     
     // Find iframe and fill "Card number" field
@@ -34,6 +39,9 @@ test('Card', async ({ page }) => {
     const confirmButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(confirmButton).toBeVisible();
     await confirmButton.click();
-
+    
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+    
     await expect(page.locator('text="Return to Shopper View"')).toBeVisible();
 });
