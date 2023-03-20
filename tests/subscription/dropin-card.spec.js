@@ -13,6 +13,11 @@ test('Dropin Card', async ({ page }) => {
 
     // Click "Continue to confirm subscription"
     await page.getByRole('link', { name: 'Continue to confirm subscription' }).click();
+
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+    
+    // Assert that "Credit or debit card" is visible within iframe
     await expect(page.locator('text="Credit or debit card"')).toBeVisible();
 
     // Click "Credit or debit card"
@@ -25,6 +30,9 @@ test('Dropin Card', async ({ page }) => {
         // Click radio button for > Adyen-Web 5.33.x or higher
         await radioButton.click();
     }
+
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle')
     
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
