@@ -54,8 +54,5 @@ test('Dropin Card', async ({ page }) => {
     await expect(confirmButton).toBeVisible();
     await confirmButton.click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
-    
     await expect(page.locator('text="Return to Shopper View"')).toBeVisible();
 });

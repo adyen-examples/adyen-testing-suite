@@ -54,8 +54,5 @@ test('Dropin Card', async ({ page }) => {
     await expect(payButton).toBeVisible();
     await payButton.click();
     
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
-    
     await expect(page.locator('text="Return Home"')).toBeVisible();
 });
