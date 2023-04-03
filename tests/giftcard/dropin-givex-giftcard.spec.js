@@ -19,9 +19,15 @@ test('Dropin Givex', async ({ page }) => {
 
     // Enter giftcard #1 // 110 EUR
     await enterGiftcardDetails(page);
+    
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
 
     // Enter giftcard #2 // 60 EUR
     await enterGiftcardDetails(page);
+    
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
 
     // Enter giftcard #3 // 10 EUR (final payment)
     await enterGiftcardDetails(page);
@@ -58,7 +64,4 @@ async function enterGiftcardDetails(page) {
     const redeemButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(redeemButton).toBeVisible();
     await redeemButton.click();
-    
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
 }
