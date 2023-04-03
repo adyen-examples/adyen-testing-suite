@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-// Enter two giftcards and use a card to finalize the paymente
+// Enter two giftcards and use a card to finalize the payment
 test('Dropin Giftcard Component with Givex and Scheme', async ({ page }) => {
     await page.goto('/');
 

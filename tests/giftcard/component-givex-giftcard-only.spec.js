@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-// Enters three givex giftcards in a row and hit pay
+// Enters three givex giftcards in a row and click pay
 test('Dropin Giftcard Component with Givex Giftcard Only', async ({ page }) => {
     await page.goto('/');
 
