@@ -13,19 +13,16 @@ test('Dropin Generic Giftcard', async ({ page }) => {
 
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
-    
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
 
     // Enter giftcard #1 // 110 EUR
     await enterGiftcardDetails(page);
-
+    
     // Enter giftcard #2 // 60 EUR
     await enterGiftcardDetails(page);
 
     // Enter giftcard #3 // 10 EUR (final payment)
     await enterGiftcardDetails(page);
-    
+
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(payButton).toBeVisible();
@@ -35,7 +32,10 @@ test('Dropin Generic Giftcard', async ({ page }) => {
 });
 
 async function enterGiftcardDetails(page) {
-    // Click "Credit or debit card"
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+
+    // Click "Generic Giftcard"
     const radioButton = await page.getByRole('radio', { name: 'Generic GiftCard' });
     if (await radioButton.count() === 0) {
         // Click normal button for < Adyen-Web 5.32.x or lower
@@ -58,7 +58,4 @@ async function enterGiftcardDetails(page) {
     const redeemButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(redeemButton).toBeVisible();
     await redeemButton.click();
-    
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
 }

@@ -13,21 +13,12 @@ test('Dropin Givex', async ({ page }) => {
 
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
-    
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
 
     // Enter giftcard #1 // 110 EUR
     await enterGiftcardDetails(page);
     
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
-
     // Enter giftcard #2 // 60 EUR
     await enterGiftcardDetails(page);
-    
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
 
     // Enter giftcard #3 // 10 EUR (final payment)
     await enterGiftcardDetails(page);
@@ -41,7 +32,10 @@ test('Dropin Givex', async ({ page }) => {
 });
 
 async function enterGiftcardDetails(page) {
-    // Click "Credit or debit card"
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle');
+
+    // Click "Givex"
     const radioButton = await page.getByRole('radio', { name: 'Givex' });
     if (await radioButton.count() === 0) {
         // Click normal button for < Adyen-Web 5.32.x or lower
