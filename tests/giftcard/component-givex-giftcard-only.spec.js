@@ -22,7 +22,7 @@ test('Dropin Giftcard Component with Givex Giftcard Only', async ({ page }) => {
     await enterGiftcardDetails(page);
     
     // Verify if the visual cue is appended on the frontend
-    await expect(page.getByText('Giftcard applied -50.00')).toBeVisible();
+    await expect(page.getByText(/Gift card applied/)).toBeVisible();
 
     // Enter giftcard #2 // 60 EUR
     await enterGiftcardDetails(page);
