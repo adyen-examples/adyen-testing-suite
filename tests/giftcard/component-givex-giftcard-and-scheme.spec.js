@@ -9,7 +9,7 @@ test('Dropin Giftcard Component with Givex and Scheme', async ({ page }) => {
     await expect(page.locator('text="Select a demo"')).toBeVisible();
 
     // Select "Giftcard"
-    await page.getByRole('link', { name: 'Giftcard Component' }).click();
+    await page.getByRole('link', { name: 'Gift Card Component' }).click();
     await expect(page.locator('text="Cart"')).toBeVisible();
 
     // Click "Continue to checkout"
