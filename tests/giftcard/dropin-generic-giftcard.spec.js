@@ -1,10 +1,10 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-test('Dropin Generic Giftcard', async ({ page }) => {
+test('Dropin Generic Gift Card', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveTitle(/Giftcard Demo/);
+    await expect(page).toHaveTitle(/Gift Card Demo/);
     await expect(page.locator('text="Select a demo"')).toBeVisible();
 
     // Select "Drop-in"

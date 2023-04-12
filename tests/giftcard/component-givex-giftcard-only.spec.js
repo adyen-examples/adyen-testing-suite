@@ -2,10 +2,10 @@
 const { test, expect } = require('@playwright/test');
 
 // Enters three givex giftcards in a row and click pay
-test('Dropin Giftcard Component with Givex Giftcard Only', async ({ page }) => {
+test('Dropin Gift Card Component with Givex Giftcard Only', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveTitle(/Giftcard Demo/);
+    await expect(page).toHaveTitle(/Gift Card Demo/);
     await expect(page.locator('text="Select a demo"')).toBeVisible();
 
     // Select "Giftcard"
@@ -40,7 +40,7 @@ test('Dropin Giftcard Component with Givex Giftcard Only', async ({ page }) => {
 
 async function enterGiftcardDetails(page) {
     // Click on "Add Giftcard"
-    await page.getByRole('button', { name: 'Add Giftcard' }).click();
+    await page.getByRole('button', { name: 'Add Gift Card' }).click();
 
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card number"i]');

@@ -4,7 +4,7 @@ const { test, expect } = require('@playwright/test');
 test('Dropin Givex', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveTitle(/Giftcard Demo/);
+    await expect(page).toHaveTitle(/Gift Card Demo/);
     await expect(page.locator('text="Select a demo"')).toBeVisible();
 
     // Select "Drop-in"
