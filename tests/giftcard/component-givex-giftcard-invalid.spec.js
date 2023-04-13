@@ -28,7 +28,7 @@ test('Gift Card Component with Givex Giftcard Invalid', async ({ page }) => {
 
 async function enterInvalidGiftcardDetails(page) {
     // Click on "Add Giftcard"
-    await page.getByRole('button', { name: 'Gift Card' }).click();
+    await page.getByRole('button', { name: 'Redeem Gift Card' }).click();
 
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card number"i]');
