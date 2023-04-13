@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 
 // Enter two giftcards and use a card to finalize the payment
-test('Dropin Gift Card Component with Givex and Scheme', async ({ page }) => {
+test('Gift Card Component with Givex and Scheme', async ({ page }) => {
     await page.goto('/');
 
     await expect(page).toHaveTitle(/Gift Card Demo/);
@@ -40,7 +40,7 @@ test('Dropin Gift Card Component with Givex and Scheme', async ({ page }) => {
 
 async function enterGiftcardDetails(page) {
     // Click on "Add Giftcard"
-    await page.getByRole('button', { name: 'Add Gift Card' }).click();
+    await page.getByRole('button', { name: 'Gift Card' }).click();
 
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card number"i]');
@@ -56,7 +56,7 @@ async function enterGiftcardDetails(page) {
 
 async function enterSchemeDetails(page) {
     // Click on "Scheme" button
-    await page.getByRole('button', { name: 'scheme' }).click();
+    await page.getByRole('button', { name: 'Credit or debit card' }).click();
     
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle')
