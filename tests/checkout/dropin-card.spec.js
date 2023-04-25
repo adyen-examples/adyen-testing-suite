@@ -35,15 +35,15 @@ test('Dropin Card', async ({ page }) => {
     await page.waitForLoadState('networkidle')
     
     // Find iframe and fill "Card number" field
-    const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
+    const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
     await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4166 6766 6766 6746');
 
     // Find iframe and fill "Expiry date" field
-    const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');
+    const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
     await expiryDateFrame.getByPlaceholder('MM/YY').fill('03/30');
 
     // Find iframe and fill "CVC / CVV" field
-    const cvcFrame = page.frameLocator('internal:role=region[name="Credit or debit card"i] >> internal:attr=[title="Iframe for secured card security code"i]');
+    const cvcFrame = await page.frameLocator('iframe[title*="security code"]');
     await cvcFrame.getByPlaceholder('3 digits').fill('737');
    
     // Find and fill "Name on card" field - Note: this field is not contained within an iframe
