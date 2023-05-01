@@ -69,8 +69,9 @@ async function enterSchemeDetails(page) {
     const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');
     await expiryDateFrame.getByPlaceholder('MM/YY').fill('03/30');
 
-    // Find iframe and fill "CVC / CVV" field
-    const cvcFrame = page.frameLocator('internal:attr=[title="Iframe for secured card security code"i]');
+    // Find iframe for CVC
+    const cvcFrame = await page.getByRole('region[name="Credit or debit card"i]').frameLocator('iframe[title*="security code"]');
+    // Fill "CVC / CVV" field
     await cvcFrame.getByPlaceholder('3 digits').fill('737');
    
     // Find and fill "Name on card" field - Note: this field is not contained within an iframe
