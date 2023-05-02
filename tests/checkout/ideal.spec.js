@@ -13,10 +13,10 @@ test('iDEAL', async ({ page }) => {
 
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
-    await expect(page.locator('text="Select your bank"')).toBeVisible();
+    await expect(page.getByTitle('Select your bank')).toBeVisible();
 
     // Click "Select your bank"
-    await page.click('text="Select your bank"');
+    await page.getByTitle('Select your bank').click();
 
     // Choose "Test Issuer"
     const element = page.locator('input[aria-autocomplete="list"]');
