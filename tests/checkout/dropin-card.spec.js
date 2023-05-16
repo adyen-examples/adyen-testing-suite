@@ -44,6 +44,7 @@ test('Dropin Card', async ({ page }) => {
 
     // Find iframe for CVC
     const cvcFrame = await page.getByRole('region[name="Credit or debit card"i]').frameLocator('iframe[title*="security code"]');
+    
     // Fill "CVC / CVV" field
     await cvcFrame.getByPlaceholder('3 digits').fill('737');
    
