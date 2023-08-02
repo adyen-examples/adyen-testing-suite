@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-test('Card', async ({ page }) => {
+test('Card Authorised', async ({ page }) => {
     await page.goto('/');
 
     await expect(page).toHaveTitle(/Booking View/);
@@ -38,5 +38,7 @@ test('Card', async ({ page }) => {
     await expect(payButton).toBeVisible();
     await payButton.click();
     
+    // Verify "authorised" text to be visible
+    await expect(page.locator('text=/authorised/')).toBeVisible();
     await expect(page.locator('text="Return to Booking View"')).toBeVisible();
 });
