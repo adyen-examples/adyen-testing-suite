@@ -42,7 +42,7 @@ npx playwright test webhook
 Execute tests in folder (i.e. matching foldername)
 
 ```
-npx playwright test checkout 
+npx playwright test ./checkout 
 ```
 
 Execute tests with open browser 
@@ -83,10 +83,10 @@ There are two ways to run the tests:
 
 1. Run the following command with the URL set to the public URL of the application.
 ```
-URL=https://8080-adyenexampl-adyendotnet-1xxxxxxxxxx.ws-eu88.gitpod.io npx playwright test checkout
+URL=https://8080-adyenexampl-adyendotnet-1xxxxxxxxxx.ws-eu88.gitpod.io npx playwright test ./checkout
 ```
 
-2. Modify the `playwright.config.js` file and replace `http://localhost:8080` with the public URL of the application. After modifying the URL, (re)run the command `npx playwright install`, followed by `npx playwright test checkout`.
+2. Modify the `playwright.config.js` file and replace `http://localhost:8080` with the public URL of the application. After modifying the URL, (re)run the command `npx playwright install`, followed by `npx playwright test ./checkout`.
 ```
 # See 'http://localhost:8080' in playwright.config.js
 baseURL: process.env.URL || 'http://localhost:8080'
