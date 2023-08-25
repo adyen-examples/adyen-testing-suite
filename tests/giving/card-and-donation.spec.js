@@ -4,7 +4,7 @@ const { test, expect } = require('@playwright/test');
 test('Card and donate', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveTitle(/Checkout Demo - Select type/);
+    await expect(page).toHaveTitle(/Adyen Giving Demo - Select type/);
 
     // Select "Card"
     await page.getByRole('link', { name: 'Card', exact: true }).click();
