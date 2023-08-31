@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const utilities = require("../utilities");
 
 test('Card Refused', async ({ page }) => {
     await page.goto('/');
@@ -17,22 +18,10 @@ test('Card Refused', async ({ page }) => {
     
     // Assert that "Card number" is visible within iframe
     await expect(page.locator('text="Card number"')).toBeVisible();
-    
-    // Find iframe and fill "Card number" field
-    const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4111 1111 1111 1111');
 
-    // Find iframe and fill "Expiry date" field
-    const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
-    await expiryDateFrame.getByPlaceholder('MM/YY').fill('03/30');
-
-    // Find iframe and fill "CVC / CVV" field
-    const cvcFrame = await page.frameLocator('iframe[title*="security code"]');
-    await cvcFrame.getByPlaceholder('3 digits').fill('737');
-   
+    // Fill card details and fill "Name on card" field with "DECLINED" to trigger 'capture failed' scenario
     // https://docs.adyen.com/development-resources/testing/result-code-testing/testing-with-card-holder-name/#payment-result
-    // Find and fill "Name on card" field with "capture failed" to trigger fail scenario - Note: this field is not contained within an iframe
-    await page.getByPlaceholder('J. Smith').fill('DECLINED');
+    await utilities.fillCardDetails(page, { nameOnCard: 'DECLINED'});
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');

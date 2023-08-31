@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const utilities = require('../utilities');
 
 test('Card', async ({ page }) => {
     await page.goto('/');
@@ -16,26 +17,14 @@ test('Card', async ({ page }) => {
     
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle');
-    
+
     // Assert that "Card number" is visible within iframe
     await expect(page.locator('text="Card number"')).toBeVisible();
-
-    // Find iframe and fill "Card number" field
-    const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4111 1111 1111 1111');
-
-    // Find iframe and fill "Expiry date" field
-    const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
-    await expiryDateFrame.getByPlaceholder('MM/YY').fill('03/30');
-
-    // Find iframe and fill "CVC / CVV" field
-    const cvcFrame = await page.frameLocator('iframe[title*="security code"]');
-    await cvcFrame.getByPlaceholder('3 digits').fill('737');
-   
-    // Find and fill "Name on card" field - Note: this field is not contained within an iframe
-    await page.getByPlaceholder('J. Smith').fill('J. Smith');
-
-    // Click "Confirm preauthorization"
+    
+    // Fill card details
+    await utilities.fillCardDetails(page);
+    
+    // Click "Confirm pre-authorisation"
     const confirmButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(confirmButton).toBeVisible();
     await confirmButton.click();

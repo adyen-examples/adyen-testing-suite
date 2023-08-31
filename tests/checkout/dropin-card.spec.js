@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const utilities = require('../utilities');
 
 test('Dropin Card', async ({ page }) => {
     await page.goto('/');
@@ -26,23 +27,9 @@ test('Dropin Card', async ({ page }) => {
 
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle')
-    
-    // Find iframe and fill "Card number" field
-    const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4111 1111 1111 1111');
 
-    // Find iframe and fill "Expiry date" field
-    const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
-    await expiryDateFrame.getByPlaceholder('MM/YY').fill('03/30');
-
-    // Find iframe for CVC
-    const cvcFrame = await page.getByRole('region[name="Credit or debit card"i]').frameLocator('iframe[title*="security code"]');
-    
-    // Fill "CVC / CVV" field
-    await cvcFrame.getByPlaceholder('3 digits').fill('737');
-   
-    // Find and fill "Name on card" field - Note: this field is not contained within an iframe
-    await page.getByPlaceholder('J. Smith').fill('J. Smith');
+    // Fill card details
+    await utilities.fillCardDetails(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
