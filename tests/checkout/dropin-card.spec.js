@@ -29,7 +29,7 @@ test('Dropin Card', async ({ page }) => {
     await page.waitForLoadState('networkidle')
 
     // Fill card details
-    await utilities.fillCardDetails(page);
+    await utilities.fillDropinCardDetails(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');

@@ -63,5 +63,5 @@ async function enterSchemeDetails(page) {
     await page.waitForLoadState('networkidle')
 
     // Fill card details
-    await utilities.fillCardDetails(page);
+    await utilities.fillComponentCardDetails(page);
 }

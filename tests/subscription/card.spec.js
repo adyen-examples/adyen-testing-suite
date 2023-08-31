@@ -22,7 +22,7 @@ test('Card', async ({ page }) => {
     await expect(page.locator('text="Card number"')).toBeVisible();
     
     // Fill card details
-    await utilities.fillCardDetails(page);
+    await utilities.fillComponentCardDetails(page);
     
     // Click "Confirm pre-authorisation"
     const confirmButton = page.locator('.adyen-checkout__button__text >> visible=true');
