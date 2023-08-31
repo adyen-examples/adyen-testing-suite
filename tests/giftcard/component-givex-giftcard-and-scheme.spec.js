@@ -58,10 +58,22 @@ async function enterGiftcardDetails(page) {
 async function enterSchemeDetails(page) {
     // Click on "Scheme" button
     await page.getByRole('button', { name: 'Credit or debit card' }).click();
-    
+
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle')
 
-    // Fill card details
-    await utilities.fillComponentCardDetails(page);
+    // Find iframe and fill "Card number" field
+    const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(utilities.CARD_NUMBER);
+
+    // Find iframe and fill "Expiry date" field
+    const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');
+    await expiryDateFrame.getByPlaceholder('MM/YY').fill(utilities.EXPIRY_DATE);
+
+    // Find iframe and fill "CVC / CVV" field
+    const cvcFrame = page.frameLocator('internal:attr=[title="Iframe for secured card security code"i]');
+    await cvcFrame.getByPlaceholder('3 digits').fill(utilities.CVC);
+
+    // Find and fill "Name on card" field - Note: this field is not contained within an iframe
+    await page.getByPlaceholder('J. Smith').fill(utilities.NAME_ON_CARD);
 }

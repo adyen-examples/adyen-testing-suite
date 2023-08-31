@@ -21,14 +21,14 @@ test('Card and Cancel', async ({ page }) => {
     await expect(page.locator('text="Card number"')).toBeVisible();
     
     // Fill card details
-    await utilities.fillComponentCardDetails(page);
+    await utilities.fillComponentCardDetails(page, { cardNumber: '5555 3412 4444 1115'});
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(payButton).toBeVisible();
     await payButton.click();
 
-    // Click Amount button
+    // Click "Not now" button
     await page.getByText('Not now').click();
 
     await expect(page.locator('text="Donate"')).toBeHidden();
