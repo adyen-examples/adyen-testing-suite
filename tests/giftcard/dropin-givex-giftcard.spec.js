@@ -37,14 +37,7 @@ async function enterGiftcardDetails(page) {
 
     // Click "Givex"
     const radioButton = await page.getByRole('radio', { name: 'Givex' });
-    if (await radioButton.count() === 0) {
-        // Click normal button for < Adyen-Web 5.32.x or lower
-        await page.getByRole('button', { name: 'Givex' }).click();
-    }
-    else {
-        // Click radio button for > Adyen-Web 5.33.x or higher
-        await radioButton.click();
-    }
+    await radioButton.click();
     
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card number"i]');
