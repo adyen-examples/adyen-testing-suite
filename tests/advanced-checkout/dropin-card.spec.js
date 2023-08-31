@@ -23,14 +23,7 @@ test('Dropin Card', async ({ page }) => {
 
     // Click "Credit or debit card"
     const radioButton = await page.getByRole('radio', { name: 'Credit or debit card' });
-    if (await radioButton.count() === 0) {
-        // Click normal button for < Adyen-Web 5.32.x or lower
-        await page.getByRole('button', { name: 'Credit or debit card' }).click();
-    }
-    else {
-        // Click radio button for > Adyen-Web 5.33.x or higher
-        await radioButton.click();
-    }
+    await radioButton.click();
 
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle')
