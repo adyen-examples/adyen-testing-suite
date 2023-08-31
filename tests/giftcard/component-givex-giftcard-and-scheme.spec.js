@@ -63,7 +63,7 @@ async function enterSchemeDetails(page) {
     
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4166 6766 6766 6746');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4111 1111 1111 1111');
 
     // Find iframe and fill "Expiry date" field
     const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');

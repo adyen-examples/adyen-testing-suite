@@ -22,7 +22,7 @@ test('Card', async ({ page }) => {
 
     // Find iframe and fill "Card number" field
     const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4166 6766 6766 6746');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('4111 1111 1111 1111');
 
     // Find iframe and fill "Expiry date" field
     const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
