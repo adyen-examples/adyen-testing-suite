@@ -12,7 +12,7 @@ It can be executed in 2 ways:
 
 * Node 17+
 * Start sample application on `localhost:8080`
-* Make sure the sample application uses English language 
+* Make sure the sample application uses English language
 
 ### Install Playwright
 
@@ -24,6 +24,19 @@ Add Playwright dependency and install the browsers.
 ```
 
 More info on Playwright [Installation](https://playwright.dev/docs/intro) page.
+
+### Env variables
+
+The webhook tests require the HMAC Key used by the application to sign the webhook payloads
+
+Create `.env` file 
+
+```properties
+# set the same key used by the application being tested
+ADYEN_HMAC_KEY = 
+
+```
+
 
 ### Run test suite
 
