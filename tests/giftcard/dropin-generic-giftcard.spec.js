@@ -1,6 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
+// Test generic Gift Card in drop-in
 test('Dropin Generic Gift Card', async ({ page }) => {
     await page.goto('/');
 
@@ -14,13 +15,7 @@ test('Dropin Generic Gift Card', async ({ page }) => {
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
 
-    // Enter giftcard #1 // 110 EUR
-    await enterGiftcardDetails(page);
-    
-    // Enter giftcard #2 // 60 EUR
-    await enterGiftcardDetails(page);
-
-    // Enter giftcard #3 // 10 EUR (final payment)
+    // Enter giftcard
     await enterGiftcardDetails(page);
 
     // Click "Pay" button
@@ -39,9 +34,9 @@ async function enterGiftcardDetails(page) {
     const radioButton = await page.getByRole('radio', { name: 'Generic GiftCard' });
     await radioButton.click();
     
-    // Find iframe and fill "Card number" field
+    // Find iframe and fill "Gift Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card number"i]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('6364530000000000');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('6032610000000005');
 
     // Find iframe and fill "Pin" field
     const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card security code"i]');

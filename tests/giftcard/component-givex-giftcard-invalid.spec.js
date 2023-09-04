@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-// Enters three givex giftcards in a row and click pay
+// Test an invalid givex giftcard
 test('Gift Card Component with Givex Giftcard Invalid', async ({ page }) => {
     await page.goto('/');
 
