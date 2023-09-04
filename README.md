@@ -33,7 +33,7 @@ Create `.env` file
 
 ```properties
 # set the same key used by the application being tested
-ADYEN_HMAC_KEY = 
+ADYEN_HMAC_KEY = enter your HMAC key here
 
 ```
 
