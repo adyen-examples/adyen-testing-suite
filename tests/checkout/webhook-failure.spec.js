@@ -10,7 +10,7 @@ test('Webhook Notification', async ({ request }) => {
                 {
                     "NotificationRequestItem":{
                         "additionalData":{
-                            "hmacSignature":"+JWKfq4ynALK+FFzGgHnp1jSMQJMBJeb87dlph24sXw="
+                            "hmacSignature":"INVALID_HMAC_SIGNATURE"
                         },
                         "eventCode":"AUTHORISATION",
                         "success":"true",
