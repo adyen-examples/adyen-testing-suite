@@ -8,6 +8,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.37.1"
+    "@playwright/test": "^1.37.1",
+    "@adyen/api-library": "^14.0.0",
+    "dotenv": "^16.3.1"
   }
 }
