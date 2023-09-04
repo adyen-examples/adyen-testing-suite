@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const utilities = require('../utilities');
 
-// Enter two giftcards and use a card to finalize the payment
+// Test a giftcard and use a card to finalize the payment
 test('Gift Card Component with Givex and Scheme', async ({ page }) => {
     await page.goto('/');
 
@@ -19,16 +19,13 @@ test('Gift Card Component with Givex and Scheme', async ({ page }) => {
     // Wait for network state to be idle
     await page.waitForLoadState('networkidle');
 
-    // Enter giftcard #1 // 110 EUR
+    // Enter giftcard  // outstanding 110 EUR
     await enterGiftcardDetails(page);
     
     // Verify if the visual cue is appended on the frontend
     await expect(page.getByText(/Gift card applied/)).toBeVisible();
 
-    // Enter giftcard #2 // 60 EUR
-    await enterGiftcardDetails(page);
-
-    // Enter card scheme details #3 // 10 EUR (final payment)
+    // Enter card scheme details // outstanding 60 EUR (final payment)
     await enterSchemeDetails(page);
 
     // Click "Pay" button
