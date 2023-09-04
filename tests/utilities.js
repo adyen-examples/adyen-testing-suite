@@ -1,3 +1,8 @@
+const dotenv = require('dotenv');
+const { default: HmacValidator } = require('@adyen/api-library/lib/src/utils/hmacValidator');
+
+dotenv.config();
+
 module.exports = {
     /** Card number. */
     CARD_NUMBER: '4111 1111 1111 1111',
@@ -61,5 +66,18 @@ module.exports = {
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
         await page.getByPlaceholder('J. Smith').fill(nameOnCard);
+    },
+
+    /** Utility function to calculate HMAC signature (using Adyen NodeJS library)
+    */
+    async calculateHmacSignature(notificationRequestItem) {
+
+        const hmacKey = process.env.ADYEN_HMAC_KEY;
+        if(!hmacKey) {
+            throw Error("HMAC_KEY is undefined")
+        }
+
+        return new HmacValidator().calculateHmac(notificationRequestItem, hmacKey);
     }
+
 };

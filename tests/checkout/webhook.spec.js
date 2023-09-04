@@ -1,9 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const dotenv = require('dotenv');
-const { default: HmacValidator } = require('@adyen/api-library/lib/src/utils/hmacValidator');
-
-dotenv.config();
+const utilities = require('../utilities');
 
 // test webhook is successfully delivered
 test('Webhook Notification', async ({ request }) => {
@@ -22,7 +19,7 @@ test('Webhook Notification', async ({ request }) => {
     };
 
     // calculate signature from payload
-    const hmacSignature = await calculateHmacSignature(notificationRequestItem);
+    const hmacSignature = await utilities.calculateHmacSignature(notificationRequestItem);
     // add hmacSignature to 'additionalData'
     notificationRequestItem["additionalData"] = {"hmacSignature" : ""+hmacSignature+""}
 
@@ -46,16 +43,3 @@ test('Webhook Notification', async ({ request }) => {
         .then(value => {expect(value).toEqual("[accepted]");} );
 });
 
-// calculate HMAC signature using Adyen NodeJS library
-async function calculateHmacSignature(notificationRequestItem) {
-
-    const hmacKey = process.env.ADYEN_HMAC_KEY;
-
-    if(hmacKey === undefined) {
-        throw Error("HMAC_KEY is undefined")
-    }
-
-    const expectedSign = new HmacValidator().calculateHmac(notificationRequestItem, hmacKey);
-    
-    return expectedSign;
-}
