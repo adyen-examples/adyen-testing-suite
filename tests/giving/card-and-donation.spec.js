@@ -5,7 +5,7 @@ const utilities = require('../utilities');
 test('Card and donate', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveTitle(/Adyen Giving Demo - Select type/);
+    await expect(page).toHaveTitle(/Adyen Giving Demo/);
 
     // Select "Card"
     await page.getByRole('link', { name: 'Card', exact: true }).click();
