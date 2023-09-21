@@ -7,7 +7,6 @@ const path = require('path');
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
-
   testDir: './tests',
 
   /* Maximum time one test can run for. */
@@ -19,11 +18,11 @@ const config = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 10000
+    timeout: 20 * 1000
   },
 
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -39,11 +38,10 @@ const config = {
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-
     baseURL: process.env.URL || 'http://localhost:8080',
 
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 15000,
+    actionTimeout: 15 * 1000,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',

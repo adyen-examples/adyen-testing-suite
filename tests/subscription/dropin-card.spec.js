@@ -31,7 +31,7 @@ test('Dropin Card', async ({ page }) => {
     // Fill card details
     await utilities.fillDropinCardDetails(page);
 
-    // Click "Confirm preauthorization"
+    // Click "Confirm"
     const confirmButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(confirmButton).toBeVisible();
     await confirmButton.click();
