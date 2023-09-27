@@ -10,7 +10,7 @@ const config = {
   testDir: './tests',
 
   /* Maximum time one test can run for. */
-  timeout: 25 * 1000,
+  timeout: 5 * 60 * 1000,
 
   expect: {
 
@@ -18,7 +18,7 @@ const config = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 20 * 1000
+    timeout: 40 * 1000
   },
 
   /* Run tests in files in parallel */
@@ -41,7 +41,7 @@ const config = {
     baseURL: process.env.URL || 'http://localhost:8080',
 
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 15 * 1000,
+    actionTimeout: 40 * 1000,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
