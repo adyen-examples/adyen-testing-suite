@@ -22,7 +22,7 @@ test('Pay By Link', async ({ page }) => {
     await page.waitForLoadState('networkidle');
 
     // Ensure the link with `uniqueReference` is created
-    await expect(page.getByText(uniqueReference)).toBeVisible();
+    await expect(page.getByText(uniqueReference).first()).toBeVisible();
 
     const link = await page.locator('text=/PL/').first();
     await link.click();
