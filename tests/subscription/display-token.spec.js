@@ -55,7 +55,7 @@ test('Display RecurringDetailReference', async ({ request, page }) => {
     // Verify token is visible in the Admin panel
     await page.goto('/admin');
 
-    await expect(page).toHaveTitle("Adyen Subscription Admin View2222");
+    await expect(page).toHaveTitle("Adyen Subscription Admin View");
     await expect(page.locator('text="ADMIN PANEL"')).toBeVisible();
 
     await expect(page.locator('text="ShopperReference: ' + shopperReference + '"')).toBeVisible();
