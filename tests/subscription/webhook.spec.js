@@ -1,43 +1,49 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const utilities = require('../utilities');
 
+// test webhook is successfully delivered
 test('Webhook Notification', async ({ request }) => {
+
+    var notificationRequestItem = {
+        "eventCode": "AUTHORISATION",
+        "success": "true",
+        "eventDate": "2019-06-28T18:03:50+01:00",
+        "merchantAccountCode": "YOUR_MERCHANT_ACCOUNT",
+        "pspReference": "7914073381342284",
+        "merchantReference": "YOUR_REFERENCE",
+        "amount": {
+            "value": 0,
+            "currency": "EUR"
+        }
+    };
+
+    // calculate signature from payload
+    const hmacSignature = await utilities.calculateHmacSignature(notificationRequestItem);
+    // add 'additionalData' with hmacSignature 
+    notificationRequestItem["additionalData"] = {
+        "hmacSignature": "" + hmacSignature + "",
+        "recurring.recurringDetailReference": "XXXXXXXXX",
+        "recurring.shopperReference": "UniqueShopperReference"
+    }
+
+    // POST webhook
     const notifications = await request.post(`/api/webhooks/notifications`, {
         data: {
             "live": "false",
-            "notificationItems":[
+            "notificationItems": [
                 {
-                    "NotificationRequestItem":{
-                        "additionalData":{
-                            "hmacSignature":"+JWKfq4ynALK+FFzGgHnp1jSMQJMBJeb87dlph24sXw=",
-                            "recurring.recurringDetailReference":"XXXXXXXXX",
-                            "recurring.shopperReference": "UniqueShopperReference"
-                        },
-                        "eventCode":"AUTHORISATION",
-                        "success":"true",
-                        "eventDate":"2019-06-28T18:03:50+01:00",
-                        "merchantAccountCode":"YOUR_MERCHANT_ACCOUNT",
-                        "pspReference": "7914073381342284",
-                        "merchantReference": "YOUR_REFERENCE",
-                        "amount": {
-                            "value":0,
-                            "currency":"EUR"
-                        }
-                    }
+                    "NotificationRequestItem": notificationRequestItem
                 }
             ]
         }
     });
 
-    /// Verify notification is not accepted (invalid HMAC)
+    // Verify status code 
+    expect(notifications.status()).toEqual(200);
 
-    // Status code not 404 (verify webhook is found)
-    expect(notifications.status()).not.toEqual(404);
-
-    // Status code not 200 (verify webhook does not accept the notification ie HMAC invalid)
-    expect(notifications.status()).not.toEqual(200);
-
-    // Body response does not contain [accepted]
+    // Verify body response 
     notifications.text()
-        .then(value => {expect(value).not.toEqual("[accepted]");} );
+        .then(value => { expect(value).toEqual("[accepted]"); });
 });
+
