@@ -16,6 +16,9 @@ module.exports = {
     /** Cardholder name. */
     NAME_ON_CARD: 'J. Smith',
 
+    /** valid AccountHolder id for AfP tests: use env variable to not expose valid Id */
+    USERNAME: process.env.AFP_USERNAME || "na",
+
     /** Utility function to fill card details on the Adyen.Web.Component - Sets default values automatically if you do not overwrite it manually.
      * See: https://docs.adyen.com/online-payments/build-your-integration/?platform=Web&integration=Components.
      * Example usage:
