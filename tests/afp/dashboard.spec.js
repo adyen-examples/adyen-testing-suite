@@ -20,3 +20,20 @@ test('Dashboard', async ({ page }) => {
   await expect(page.locator('text="My Products"')).toBeVisible();
 });
 
+test('Transactions', async ({ page }) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle(/AfP MyPlatform/);
+
+  await page.goto('/login');
+  await expect(page.locator('text="Login"')).toBeVisible();
+  // perform login
+  await page.fill('input[name="username"]', utilities.USERNAME);
+  await page.fill('input[name="password"]', "123");
+  await page.getByRole('button', { name: 'Submit' }).click();
+
+  await expect(page.locator('text="Dashboard"')).toBeVisible();
+
+  await page.goto('/transactions');
+  await expect(page.locator('text="My Transactions"')).toBeVisible();
+});
+
