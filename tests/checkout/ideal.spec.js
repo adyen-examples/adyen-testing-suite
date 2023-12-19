@@ -10,24 +10,27 @@ test('iDEAL', async ({ page }) => {
     // Select "iDEAL"
     await page.getByRole('link', { name: 'iDEAL' }).click();
     await expect(page.locator('text="Cart"')).toBeVisible();
-
+    
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
-    await expect(page.getByTitle('Select your bank')).toBeVisible();
 
     // Click "Select your bank"
     await page.getByTitle('Select your bank').click();
 
     // Choose "Test Issuer"
-    const element = page.locator('input[aria-autocomplete="list"]');
-    await element.type('Test Issuer');
-    await element.press('Enter');
-
+    const selectButton = await page.getByTitle('Select your bank');
+    if (await selectButton.count() === 0) {
+        // Click radio button for > Adyen-Web 5.53.x or higher
+        await page.getByPlaceholder('Search...').click();
+    } else {
+        await selectButton.click();
+    }
+    
     // Click "Continue to Test Issuer"
-    await page.click('text="Continue to Test Issuer"');
+    await page.getByRole('button', { name: 'Continue to Test Issuer' }).click();
     await expect(page.locator('text="iDEAL Issuer Simulation"')).toBeVisible();
 
-    // Click "Continue"
-    await page.click('text="Continue"');
-    await expect(page.locator('text="Return Home"')).toBeVisible();
+    // Click "Continue"  
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await page.getByRole('link', { name: 'Return Home' }).click();
 });

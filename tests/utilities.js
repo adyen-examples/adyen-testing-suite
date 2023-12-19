@@ -62,9 +62,8 @@ module.exports = {
         // Find iframe and fill "Expiry date" field
         const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
         await expiryDateFrame.getByPlaceholder('MM/YY').fill(expiryDate);
-
-        // Find iframe and fill "CVC" field
-        const cvcFrame = await page.getByRole('region[name="Credit or debit card"i]').frameLocator('iframe[title*="security code"]');
+       
+        const cvcFrame = await page.frameLocator('iframe[title="Iframe for security code"]');
         await cvcFrame.getByPlaceholder('3 digits').fill(cvc);
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
