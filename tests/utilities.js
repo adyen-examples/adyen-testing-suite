@@ -64,13 +64,13 @@ module.exports = {
         await expiryDateFrame.getByPlaceholder('MM/YY').fill(expiryDate);
        
         // Find iframe and fill "CVC" field
-        const cvcFrame = await page.getByRole('region[name="Credit or debit card"i]'); 
-        if (await cvcFrame.count() ===  0) {
+        const cardRegion = await page.getByRole('region[name="Credit or debit card"i]'); 
+        if (await cardRegion.count() === 0) {
             // Handle drop-in
             await page.frameLocator('iframe[title="Iframe for security code"]').getByPlaceholder('3 digits').fill(cvc);
         } else {
-            // Handle drop-in when there are are multiple CVC fields with stored payment methods, we select the correct credit/debit card CVC field
-            await cvcFrame.frameLocator('iframe[title*="security code"]').getByPlaceholder('3 digits').fill(cvc); 
+            // Handle drop-in when there are are multiple CVC fields with stored payment methods, we select the correct CVC field
+            await cardRegion.frameLocator('iframe[title*="security code"]').getByPlaceholder('3 digits').fill(cvc); 
         }
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
