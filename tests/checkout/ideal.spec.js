@@ -15,17 +15,11 @@ test('iDEAL', async ({ page }) => {
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
 
     // Click "Select your bank"
-    await page.getByTitle('Select your bank').click();
+    await page.getByPlaceholder('Search...').click();
 
     // Choose "Test Issuer"
-    const selectButton = await page.getByTitle('Select your bank');
-    if (await selectButton.count() === 0) {
-        // Click radio button for > Adyen-Web 5.53.x or higher
-        await page.getByPlaceholder('Search...').click();
-    } else {
-        await selectButton.click();
-    }
-    
+    await page.getByText('Test Issuer', { exact: true }).click();
+
     // Click "Continue to Test Issuer"
     await page.getByRole('button', { name: 'Continue to Test Issuer' }).click();
     await expect(page.locator('text="iDEAL Issuer Simulation"')).toBeVisible();
