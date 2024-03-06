@@ -50,7 +50,23 @@ test('Display RecurringDetailReference', async ({ request, page }) => {
     });
 
     // Verify status code 
-    expect(notifications.status()).toEqual(200);
+    var notifications_status = notifications.status();
+
+    if (notifications_status === 202) {
+        // Verify status code 202
+        expect(notifications.status()).toEqual(202);
+
+        // Verify empty response body
+        notifications.text()
+            .then(value => { expect(value).toEqual(""); });
+    } else {
+        // Verify legacy webhook acknowledgment (status code 200)
+        expect(notifications.status()).toEqual(200);
+
+        // Verify legacy webhook acknowledgment (response body `[accepted]`)
+        notifications.text()
+            .then(value => { expect(value).toEqual("[accepted]"); });
+    }
 
     // Verify token is visible in the Admin panel
     await page.goto('/admin');
