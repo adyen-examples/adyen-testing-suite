@@ -15,8 +15,8 @@ test('Dropin Card', async ({ page }) => {
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
+    // Wait for load event
+    await page.waitForLoadState('load');
     
     // Assert that "Credit or debit card" is visible
     await expect(page.locator('text="Credit or debit card"')).toBeVisible();
@@ -25,8 +25,8 @@ test('Dropin Card', async ({ page }) => {
     const radioButton = await page.getByRole('radio', { name: 'Credit or debit card' });
     await radioButton.click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle')
+    // Wait for load event
+    await page.waitForLoadState('load');
 
     // Fill card details
     await utilities.fillDropinCardDetails(page);

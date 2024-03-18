@@ -14,8 +14,8 @@ test('Card and Cancel', async ({ page }) => {
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
+    // Wait for load event
+    await page.waitForLoadState('load');
 
     // Assert that "Card number" is visible within iframe
     await expect(page.locator('text="Card number"')).toBeVisible();
