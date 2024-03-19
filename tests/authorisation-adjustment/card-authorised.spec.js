@@ -13,8 +13,8 @@ test('Card Authorised', async ({ page }) => {
     // Click "Continue to confirm booking"
     await page.getByRole('link', { name: 'Continue to confirm booking' }).click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
+    // Wait for load event
+    await page.waitForLoadState('load');
     
     // Assert that "Card number" is visible within iframe
     await expect(page.locator('text="Card number"')).toBeVisible();

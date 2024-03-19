@@ -14,8 +14,8 @@ test('Dropin SEPA', async ({ page }) => {
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
     
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
+    // Wait for load event
+    await page.waitForLoadState('load');
     
     // Assert that "SEPA Direct Debit" is visible
     await expect(page.locator('text="SEPA Direct Debit"')).toBeVisible();

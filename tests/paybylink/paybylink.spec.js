@@ -18,8 +18,8 @@ test('Pay By Link', async ({ page }) => {
     // Create payment link
     await page.getByRole('button', { name: 'Create!' }).click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
+    // Wait for load event
+    await page.waitForLoadState('load');
 
     // Ensure the link with `uniqueReference` is created
     await expect(page.getByText(uniqueReference).first()).toBeVisible();
@@ -27,8 +27,8 @@ test('Pay By Link', async ({ page }) => {
     const link = await page.locator('text=/PL/').first();
     await link.click();
 
-    // Wait for network state to be idle
-    await page.waitForLoadState('networkidle');
+    // Wait for load event
+    await page.waitForLoadState('load');
 
     // Check Pay by link text
     await page.getByText(/Pay by link/);
