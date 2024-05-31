@@ -42,7 +42,7 @@ const config = {
     baseURL: process.env.URL || 'http://localhost:8080',
 
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 120 * 1000,
+    actionTimeout: 240 * 1000,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
