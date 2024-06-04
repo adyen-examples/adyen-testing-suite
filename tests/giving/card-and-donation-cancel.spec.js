@@ -23,11 +23,14 @@ test('Card and Cancel', async ({ page }) => {
     // Fill card details
     await utilities.fillComponentCardDetails(page, { cardNumber: '5555 3412 4444 1115'});
 
-    // Click "Pay" button
+    // Click "Pay" button and go to Giving component
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(payButton).toBeVisible();
     await payButton.click();
 
+    // Wait for load event
+    await page.waitForLoadState('load');
+    
     // Click "Not now" button
     await page.getByText('Not now').click();
 
