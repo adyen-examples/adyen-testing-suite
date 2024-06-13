@@ -40,7 +40,7 @@ async function enterGiftcardDetails(page) {
     
     // Find iframe and fill "Gift Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card number"i]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('6032610000000005');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill('6364530000000000');
 
     // Find iframe and fill "Pin" field
     const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured gift card security code"i]');
