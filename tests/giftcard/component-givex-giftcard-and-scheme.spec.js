@@ -1,6 +1,17 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const utilities = require('../utilities');
+
+/** Card number. */
+const CARD_NUMBER = '4111 1111 1111 1111';
+
+/** Expiry Date. */
+const EXPIRY_DATE = '03/30';
+
+/** CVC number. */
+const CVC = '737';
+
+/** Cardholder name. */
+const NAME_ON_CARD = 'J. Smith';
 
 // Test a giftcard and use a card to finalize the payment
 test('Gift Card Component with Givex and Scheme', async ({ page }) => {
@@ -61,16 +72,16 @@ async function enterSchemeDetails(page) {
 
     // Find iframe and fill "Card number" field
     const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
-    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(utilities.CARD_NUMBER);
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(CARD_NUMBER);
 
     // Find iframe and fill "Expiry date" field
     const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');
-    await expiryDateFrame.getByPlaceholder('MM/YY').fill(utilities.EXPIRY_DATE);
+    await expiryDateFrame.getByPlaceholder('MM/YY').fill(EXPIRY_DATE);
 
     // Find iframe and fill "CVC / CVV" field
     const cvcFrame = page.frameLocator('internal:attr=[title="Iframe for secured card security code"i]');
-    await cvcFrame.getByPlaceholder('3 digits').fill(utilities.CVC);
+    await cvcFrame.getByPlaceholder('3 digits').fill(CVC);
 
     // Find and fill "Name on card" field - Note: this field is not contained within an iframe
-    await page.getByPlaceholder('J. Smith').fill(utilities.NAME_ON_CARD);
+    await page.getByPlaceholder('J. Smith').fill(NAME_ON_CARD);
 }
