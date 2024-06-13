@@ -1,5 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+const utilities = require('../utilities');
 
 // Test generic Gift Card in drop-in
 test('Dropin Generic Gift Card', async ({ page }) => {
@@ -17,6 +18,9 @@ test('Dropin Generic Gift Card', async ({ page }) => {
 
     // Enter giftcard
     await enterGiftcardDetails(page);
+
+    // Enter card scheme details // outstanding 60 EUR (final payment)
+    await enterSchemeDetails(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
@@ -46,4 +50,25 @@ async function enterGiftcardDetails(page) {
     const redeemButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(redeemButton).toBeVisible();
     await redeemButton.click();
+}
+
+async function enterSchemeDetails(page) {
+
+    // Wait for network state to be idle
+    await page.waitForLoadState('networkidle')
+
+    // Find iframe and fill "Card number" field
+    const cardNumberFrame = page.frameLocator('internal:attr=[title="Iframe for secured card number"i]');
+    await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(utilities.CARD_NUMBER);
+
+    // Find iframe and fill "Expiry date" field
+    const expiryDateFrame = page.frameLocator('internal:attr=[title="Iframe for secured card expiry date"i]');
+    await expiryDateFrame.getByPlaceholder('MM/YY').fill(utilities.EXPIRY_DATE);
+
+    // Find iframe and fill "CVC / CVV" field
+    const cvcFrame = page.frameLocator('internal:attr=[title="Iframe for secured card security code"i]');
+    await cvcFrame.getByPlaceholder('3 digits').fill(utilities.CVC);
+
+    // Find and fill "Name on card" field - Note: this field is not contained within an iframe
+    await page.getByPlaceholder('J. Smith').fill(utilities.NAME_ON_CARD);
 }
