@@ -13,6 +13,6 @@
     "dotenv": "^16.4.5"
   },
   "dependencies": {
-    "uuid": "^9.0.1"
+    "uuid": "^10.0.0"
   }
 }
