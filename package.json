@@ -9,7 +9,7 @@
   "license": "ISC",
   "devDependencies": {
     "@adyen/api-library": "^14.0.0",
-    "@playwright/test": "^1.44.1",
+    "@playwright/test": "^1.45.0",
     "dotenv": "^16.4.5"
   },
   "dependencies": {
