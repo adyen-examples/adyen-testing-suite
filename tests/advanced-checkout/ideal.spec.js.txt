@@ -1,6 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
+// test for iDEAL2
 test('iDEAL', async ({ page }) => {
     await page.goto('/');
 
@@ -10,27 +11,26 @@ test('iDEAL', async ({ page }) => {
     // Select "iDEAL"
     await page.getByRole('link', { name: 'iDEAL' }).click();
     await expect(page.locator('text="Cart"')).toBeVisible();
-
+    
     // Click "Continue to checkout"
     await page.getByRole('link', { name: 'Continue to checkout' }).click();
 
+    // Click "Continue to iDEAL"
+    await page.getByRole('button', { name: 'Continue to iDEAL' }).click();
+    await expect(page.locator('text="Scan with your banking app to pay"')).toBeVisible();
+
     // Click "Select your bank"
-    const selectButton = await page.getByTitle('Select your bank');
-    if (await selectButton.count() === 0) {
-        // Click radio button for > Adyen-Web 5.53.x or higher
-        await page.getByPlaceholder('Search...').click();
-    } else {
-        await selectButton.click();
-    }
+    await page.getByRole('button', { name: 'Select your bank' }).click();
 
-    // Choose "Test Issuer"
-    await page.getByText('Test Issuer', { exact: true }).click();
+    // Click "TESTNL2A"
+    await page.getByRole('button', { name: 'TESTNL2A' }).click();
+    await expect(page.locator('text="Which test simulation to run?"')).toBeVisible();
 
-    // Click "Continue to Test Issuer"
-    await page.getByRole('button', { name: 'Continue to Test Issuer' }).click();
-    await expect(page.locator('text="iDEAL Issuer Simulation"')).toBeVisible();
+    // Click "Success"
+    await page.getByRole('button', { name: 'Success' }).click();
 
     // Click "Continue"  
-    await page.getByRole('button', { name: 'Continue' }).click();
     await page.getByRole('link', { name: 'Return Home' }).click();
+
 });
+
