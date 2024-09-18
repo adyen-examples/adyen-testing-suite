@@ -5,7 +5,7 @@ const { test, expect } = require('@playwright/test');
 test('iDEAL', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveTitle(/Checkout Demo Advanced/);
+    await expect(page).toHaveTitle(/Checkout Demo/);
     await expect(page.locator('text="Select a demo"')).toBeVisible();
 
     // Select "iDEAL"
