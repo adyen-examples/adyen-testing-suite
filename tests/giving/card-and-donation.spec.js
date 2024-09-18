@@ -24,7 +24,7 @@ test('Card and donate', async ({ page }) => {
     await utilities.fillComponentCardDetails(page, { cardNumber: '5555 3412 4444 1115'});
 
     // Click "Pay" button and go to Giving component
-    const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
+    const payButton = page.locator('text="Pay €100.00"');
     await expect(payButton).toBeVisible();
     await payButton.click();
 
