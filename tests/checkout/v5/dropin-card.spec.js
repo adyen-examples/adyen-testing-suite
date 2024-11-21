@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const utilities = require('../utilities');
+const utilities = require('../../utilities');
 
 test('Dropin Card', async ({ page }) => {
     await page.goto('/');
