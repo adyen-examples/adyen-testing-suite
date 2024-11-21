@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/playwright:v1.30.0-focal
 
-# Sets argument as environmental variable
-ENV PLAYWRIGHT_FOLDERNAME=checkout
+# Sets argument as environmental variable (default value)
+ENV PLAYWRIGHT_FOLDERNAME=checkout/v5
 
 # Copy from current directory to `/e2e`
 COPY . /e2e
