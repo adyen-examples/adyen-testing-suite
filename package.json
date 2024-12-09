@@ -10,7 +10,7 @@
   "devDependencies": {
     "@adyen/api-library": "^14.0.0",
     "@playwright/test": "^1.48.2",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.7"
   },
   "dependencies": {
     "uuid": "^10.0.0"
