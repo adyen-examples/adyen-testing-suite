@@ -10,7 +10,7 @@ const config = {
   testDir: './tests',
 
   /* Maximum time one test can run for. */
-  timeout: 5 * 60 * 1000,
+  timeout: process.env.CI ? 5 * 60 * 1000: 1 * 60 * 1000,
 
   expect: {
     /**
@@ -19,7 +19,7 @@ const config = {
      * 
      * note: waiting longer on CI
      */
-    timeout: process.env.CI ? 40 * 1000 : 20 * 1000
+    timeout: process.env.CI ? 40 * 1000 : 10 * 1000
   },
 
   /* Run tests in files in parallel */
@@ -42,7 +42,7 @@ const config = {
     baseURL: process.env.URL || 'http://localhost:8080',
 
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 240 * 1000,
+    actionTimeout: process.env.CI ? 240 * 1000 : 10 * 1000,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',

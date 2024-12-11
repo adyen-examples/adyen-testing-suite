@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const utilities = require('../utilities');
+const utilities = require('../../utilities');
 
 // test webhook is successfully delivered
 test('Webhook Notification', async ({ request }) => {
