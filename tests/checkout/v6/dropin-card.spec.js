@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const utilities = require('../utilities');
+const utilities = require('../../utilities');
 
 test('Dropin Card', async ({ page }) => {
     await page.goto('/');
@@ -18,18 +18,18 @@ test('Dropin Card', async ({ page }) => {
     // Wait for load event
     await page.waitForLoadState('load');
     
-    // Assert that "Credit or debit card" is visible
-    await expect(page.locator('text="Credit or debit card"')).toBeVisible();
+    // Assert that "Cards" is visible
+    await expect(page.locator('text="Cards"')).toBeVisible();
 
-    // Click "Credit or debit card"
-    const radioButton = await page.getByRole('radio', { name: 'Credit or debit card' });
+    // Click "Cards"
+    const radioButton = await page.getByRole('radio', { name: 'Cards' });
     await radioButton.click();
 
     // Wait for load event
     await page.waitForLoadState('load');
 
     // Fill card details
-    await utilities.fillDropinCardDetails(page);
+    await utilities.fillDropinCardDetailsV6(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');

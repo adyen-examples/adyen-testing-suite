@@ -6,11 +6,13 @@ It can be executed in 2 ways:
 - Install and run Playwright tests on Node
 - Run the `ghcr.io/adyen-examples/adyen-testing-suite` Docker image
 
+**Note:** The E2E Testing Suite supports Checkout testing with both Adyen Drop-in v5 and v6.
+
 ## Run in Node
 
 ### Pre-requisites
 
-* Node 17+
+* Node 20+
 * Start sample application on `localhost:8080`
 * Make sure the sample application uses English language
 
