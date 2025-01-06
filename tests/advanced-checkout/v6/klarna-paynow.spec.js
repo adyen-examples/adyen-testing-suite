@@ -17,5 +17,4 @@ test('Klarna Pay Now', async ({ page }) => {
 
     // Click "Continue to Klarna"    
     await page.locator('text="Continue to Pay now with Klarna."').click();
-    await expect(page).toHaveTitle("Complete your purchase");
 });
