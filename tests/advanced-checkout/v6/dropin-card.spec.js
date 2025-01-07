@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const utilities = require('../utilities');
+const utilities = require('../../utilities');
 
 test('Dropin Card', async ({ page }) => {
     await page.goto('/');
@@ -29,7 +29,7 @@ test('Dropin Card', async ({ page }) => {
     await page.waitForLoadState('load');
 
     // Fill card details
-    await utilities.fillDropinCardDetails(page);
+    await utilities.fillDropinCardDetailsV6(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
