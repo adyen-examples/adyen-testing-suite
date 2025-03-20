@@ -21,7 +21,15 @@ test('Card Refused', async ({ page }) => {
 
     // Fill card details and fill "Name on card" field with "DECLINED" to trigger 'capture failed' scenario
     // https://docs.adyen.com/development-resources/testing/result-code-testing/testing-with-card-holder-name/#payment-result
-    await utilities.fillComponentCardDetails(page, { nameOnCard: 'DECLINED' });
+    // check if Drop-in v6 is being used (wait for 4 seconds)
+    if (await page.locator("#payment-component-v6").isVisible({ timeout: 4000 })) {
+        // using Drop-in v6
+        await utilities.fillComponentCardDetailsV6(page, { nameOnCard: 'DECLINED' });
+    } else {
+        // using Drop-in v5
+        await utilities.fillComponentCardDetails(page, { nameOnCard: 'DECLINED' });
+    }
+
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');

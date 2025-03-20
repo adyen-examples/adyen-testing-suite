@@ -19,8 +19,14 @@ test('Card Authorised', async ({ page }) => {
     // Assert that "Card number" is visible within iframe
     await expect(page.locator('text="Card number"')).toBeVisible();
 
-    // Fill card details
-    await utilities.fillComponentCardDetails(page);
+    // check if Drop-in v6 is being used (wait for 4 seconds)
+    if (await page.locator("#payment-component-v6").isVisible({ timeout: 4000 })) {
+        // using Drop-in v6
+        await utilities.fillComponentCardDetailsV6(page);
+    } else {
+        // using Drop-in v5
+        await utilities.fillComponentCardDetails(page);
+    }
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
