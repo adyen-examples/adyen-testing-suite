@@ -34,7 +34,10 @@ test('Transactions', async ({ page }) => {
   await expect(page.locator('text="Dashboard"')).toBeVisible();
 
   await page.goto('/transactions');
+  // page title
   await expect(page.locator('text="My Transactions"')).toBeVisible();
+  // component title
+  await expect(page.locator('text="Transactions overview"')).toBeVisible();
 });
 
 test('Payouts', async ({ page }) => {
@@ -52,6 +55,8 @@ test('Payouts', async ({ page }) => {
 
   await page.goto('/payouts');
   await expect(page.locator('text="My Payouts"')).toBeVisible();
+  // component title
+  await expect(page.locator('text="Payouts"')).toBeVisible();
 });
 
 test('Reports', async ({ page }) => {
@@ -69,5 +74,7 @@ test('Reports', async ({ page }) => {
 
   await page.goto('/reports');
   await expect(page.locator('text="My Reports"')).toBeVisible();
+  // component title
+  await expect(page.locator('text="Reports"')).toBeVisible();
 });
 
