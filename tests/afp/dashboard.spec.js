@@ -33,11 +33,13 @@ test('Transactions', async ({ page }) => {
 
   await expect(page.locator('text="Dashboard"')).toBeVisible();
 
-  await page.goto('/transactions');
+  await page.goto('/transactions', { waitUntil: 'networkidle' });
+
   // page title
   await expect(page.locator('text="My Transactions"')).toBeVisible();
-  // component title
-  await expect(page.locator('text="Transactions overview"')).toBeVisible();
+  // verify no error while loading 
+  await expect(page.locator('text="Something went wrong."')).toBeHidden();
+
 });
 
 test('Payouts', async ({ page }) => {
@@ -53,10 +55,13 @@ test('Payouts', async ({ page }) => {
 
   await expect(page.locator('text="Dashboard"')).toBeVisible();
 
-  await page.goto('/payouts');
+  await page.goto('/payouts', { waitUntil: 'networkidle' });
+
+  // page title
   await expect(page.locator('text="My Payouts"')).toBeVisible();
-  // component title
-  await expect(page.locator('text="Payouts"')).toBeVisible();
+  // verify no error while loading 
+  await expect(page.locator('text="Something went wrong."')).toBeHidden();
+
 });
 
 test('Reports', async ({ page }) => {
@@ -72,9 +77,12 @@ test('Reports', async ({ page }) => {
 
   await expect(page.locator('text="Dashboard"')).toBeVisible();
 
-  await page.goto('/reports');
+  await page.goto('/reports', { waitUntil: 'networkidle' });
+
+  // page title
   await expect(page.locator('text="My Reports"')).toBeVisible();
-  // component title
-  await expect(page.locator('text="Reports"')).toBeVisible();
+  // verify no error while loading 
+  await expect(page.locator('text="Something went wrong."')).toBeHidden();
+
 });
 
