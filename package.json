@@ -8,9 +8,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@adyen/api-library": "^14.0.0",
-    "@playwright/test": "^1.48.2",
-    "dotenv": "^16.4.5"
+    "@adyen/api-library": "^24.0.0",
+    "@playwright/test": "^1.53.1",
+    "dotenv": "^16.4.7"
   },
   "dependencies": {
     "uuid": "^10.0.0"

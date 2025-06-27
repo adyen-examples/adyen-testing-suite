@@ -66,6 +66,11 @@ Execute tests with open browser
 npx playwright test --headed 
 ```
 
+Run the test in UI Mode (visual recorder of each step)
+```
+npx playwright test --ui
+```
+
 ## Run Docker Image
 
 Run the adyen-testing-suite in a Docker container which connects to the localhost application.
