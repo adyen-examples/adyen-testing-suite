@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@adyen/api-library": "^24.0.0",
+    "@adyen/api-library": "^29.1.0",
     "@playwright/test": "^1.53.1",
     "dotenv": "^16.4.7"
   },
