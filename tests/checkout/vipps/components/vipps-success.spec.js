@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('components vipps failure', async ({ page }) => {
+test('components vipps success', async ({ page }) => {
   await page.goto('/');
 
   await page.getByRole('link', { name: 'Components Individual payment' }).click();

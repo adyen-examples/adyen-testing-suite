@@ -9,8 +9,8 @@ test('components iDEAL success', async ({ page }) => {
 
   await page.getByTestId('payment-action-button').click();
   await page.getByRole('button', { name: 'TESTNL2A' }).click();
-  await page.getByRole('button', { name: 'Failure' }).click();
-  
-  var element = await page.getByRole('heading', { name: 'Payment Failed' });
-  expect(await element.innerText()).toBe('Payment Failed');
+  await page.getByRole('button', { name: 'Success' }).click();
+  =
+  var element = await page.getByRole('heading', { name: 'Payment Successful!' });
+  expect(await element.innerText()).toBe('Payment Successful');
 });
