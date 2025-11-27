@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.30.0-focal
+FROM mcr.microsoft.com/playwright:v1.50.0-noble
 
 # Sets argument as environmental variable (default value)
 ENV PLAYWRIGHT_FOLDERNAME=checkout/v5
