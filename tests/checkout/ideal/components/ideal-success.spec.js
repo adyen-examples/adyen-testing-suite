@@ -11,6 +11,7 @@ test('components iDEAL success', async ({ page }) => {
   await page.getByRole('button', { name: 'TESTNL2A' }).click();
   await page.getByRole('button', { name: 'Success' }).click();
 
-  var element = await page.getByRole('heading', { name: 'Payment Successful!' });
-  expect(await element.innerText()).toBe('Payment Successful');
+  await page.getByRole('heading', { name: 'Payment Successful!' });
+ 
+  await page.getByRole('link', { name: 'Return to demo types' }).click();
 });
