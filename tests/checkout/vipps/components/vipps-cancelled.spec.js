@@ -7,6 +7,7 @@ test('components vipps cancelled', async ({ page }) => {
 
   await page.getByRole('link', { name: 'vipps Vipps' }).click();
   await page.getByRole('button', { name: 'Fortsett til Vipps' }).click();
+  
   await page.getByTestId('cancelled-payment-outcome-button').click();
   await page.getByRole('button', { name: 'Check updated status' }).click();
   
