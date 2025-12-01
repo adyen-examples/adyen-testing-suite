@@ -7,7 +7,6 @@ test('components mobilepay success', async ({ page }) => {
 
   await page.getByRole('link', { name: 'mobilepay MobilePay' }).click();  
   await page.getByRole('button', { name: /Forts.*t til MobilePay/i }).click();
-
   await page.getByTestId('success-payment-outcome-button').click();
   await page.getByRole('button', { name: 'Check updated status' }).click();
   
