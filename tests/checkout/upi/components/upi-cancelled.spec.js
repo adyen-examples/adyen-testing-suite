@@ -12,8 +12,9 @@ test('components upi technical failure', async ({ page }) => {
 
   const context = page.context();
 
+  const actionPromise = utilities.waitForUpiQrCodeAction(page);
   await page.getByRole('button', { name: /generate qr code/i }).click();
-  const action = await utilities.waitForUpiQrCodeAction(page);
+  const action = await actionPromise;
 
   const simulatorUrl = new URL(action.qrCodeData);
   const reference = simulatorUrl.searchParams.get('reference');

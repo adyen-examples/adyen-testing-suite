@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+const utilities = require('../../../utilities');
 
 test('components upi refused', async ({ page }) => {
   await page.goto('/');
@@ -11,29 +12,9 @@ test('components upi refused', async ({ page }) => {
 
   const context = page.context();
 
-  let qrCodePayload;
-  await Promise.all([
-    page.waitForResponse(async (res) => {
-      if (res.request().method() !== 'POST') return false;
-      if (!res.url().includes('checkoutshopper')) return false;
-
-      try {
-        const text = await res.text();
-        if (!/"qrCodeData"\s*:\s*"/i.test(text) && !/payment-simulator/i.test(text)) return false;
-        const data = JSON.parse(text);
-        const action = data?.action ?? data;
-        if (action?.type !== 'qrCode' || typeof action?.qrCodeData !== 'string') return false;
-        qrCodePayload = data;
-        return true;
-      } catch {
-        return false;
-      }
-    }, { timeout: 30_000 }),
-    page.getByRole('button', { name: /generate qr code/i }).click(),
-  ]);
-
-  if (!qrCodePayload) throw new Error('UPI response did not include qrCode action');
-  const action = qrCodePayload?.action ?? qrCodePayload;
+  const actionPromise = utilities.waitForUpiQrCodeAction(page);
+  await page.getByRole('button', { name: /generate qr code/i }).click();
+  const action = await actionPromise;
 
   const simulatorUrl = new URL(action.qrCodeData);
   const reference = simulatorUrl.searchParams.get('reference');
