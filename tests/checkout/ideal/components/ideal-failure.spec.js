@@ -1,10 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('components iDEAL failure', async ({ page }) => {
-  await page.goto('/');
-
-  await page.getByRole('link', { name: 'Components Individual payment' }).click();
-  await page.getByRole('link', { name: 'ideal iDEAL' }).click();
+  await page.goto('/checkout/ideal');
   await page.getByRole('button', { name: 'Continue to iDEAL' }).click();
 
   await page.getByTestId('payment-action-button').click();
