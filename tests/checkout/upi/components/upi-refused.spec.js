@@ -2,11 +2,7 @@ import { test, expect } from '@playwright/test';
 const utilities = require('../../../utilities');
 
 test('components upi refused', async ({ page }) => {
-  await page.goto('/');
-
-  await page.getByRole('link', { name: 'Components Individual payment' }).click();
-
-  await page.getByRole('link', { name: /upi/i }).click();
+  await page.goto('/checkout/upi');
 
   await page.getByRole('button', { name: 'QR code', exact: true }).click();
 
