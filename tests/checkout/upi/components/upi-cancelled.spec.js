@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-const utilities = require('../../../utilities');
+const QrCodeHelper = require('../../../helpers/QrCodeHelper');
 
 test('components upi technical failure', async ({ page }) => {
   await page.goto('/checkout/upi');
@@ -8,9 +8,16 @@ test('components upi technical failure', async ({ page }) => {
 
   const context = page.context();
 
-  const actionPromise = utilities.waitForUpiQrCodeAction(page);
+  const qrCodeHelper = new QrCodeHelper(page);
+  const qrCodeResponsePromise = qrCodeHelper.waitForUpiQrCodeResponse();
   await page.getByRole('button', { name: /generate qr code/i }).click();
-  const action = await actionPromise;
+  const qrCodeResponse = await qrCodeResponsePromise;
+
+  const qrCodePayload = await qrCodeResponse.json();
+  const action = qrCodePayload?.action ?? qrCodePayload;
+  if (action?.type !== 'qrCode' || typeof action?.qrCodeData !== 'string') {
+    throw new Error('UPI response did not include qrCode action');
+  }
 
   const simulatorUrl = new URL(action.qrCodeData);
   const reference = simulatorUrl.searchParams.get('reference');

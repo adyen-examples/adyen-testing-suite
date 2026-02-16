@@ -144,30 +144,6 @@ module.exports = {
         await page.getByPlaceholder('J. Smith').fill(nameOnCard);
     },
 
-    async waitForUpiQrCodeAction(page, { timeout = 30 * 1000 } = {}) {
-        let qrCodePayload;
-
-        await page.waitForResponse(async (res) => {
-            if (res.request().method() !== 'POST') return false;
-            if (!res.url().includes('checkoutshopper')) return false;
-
-            try {
-                const text = await res.text();
-                if (!/"qrCodeData"\s*:\s*"/i.test(text) && !/payment-simulator/i.test(text)) return false;
-                const data = JSON.parse(text);
-                const action = data?.action ?? data;
-                if (action?.type !== 'qrCode' || typeof action?.qrCodeData !== 'string') return false;
-                qrCodePayload = data;
-                return true;
-            } catch {
-                return false;
-            }
-        }, { timeout });
-
-        if (!qrCodePayload) throw new Error('UPI response did not include qrCode action');
-        return qrCodePayload?.action ?? qrCodePayload;
-    },
-
     /** Utility function to calculate HMAC signature (using Adyen NodeJS library)
     */
     async calculateHmacSignature(notificationRequestItem) {
