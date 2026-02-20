@@ -3,10 +3,7 @@ const { test, expect } = require('@playwright/test');
 const utilities = require('../../../utilities');
 
 test('components card success', async ({ page }) => {
-    await page.goto('/');
-
-    await page.getByRole('link', { name: 'Components Individual payment' }).click();
-    await page.getByRole('link', { name: 'card Card' }).click();
+    await page.goto('/checkout/card');
 
     // Wait for load event
     await page.waitForLoadState('load');
