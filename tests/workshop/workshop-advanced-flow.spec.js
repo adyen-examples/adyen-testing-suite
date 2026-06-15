@@ -25,8 +25,8 @@ test('Workshop - Advanced Flow Payment', async ({ page }) => {
     // Wait for load event
     await page.waitForLoadState('load');
 
-    // Fill card details
-    await utilities.fillDropinCardDetails(page);
+    // Fill card details (Adyen.Web v6 Drop-in)
+    await utilities.fillDropinCardDetailsV6(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
