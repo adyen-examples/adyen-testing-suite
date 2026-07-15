@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.50.0-noble
+FROM mcr.microsoft.com/playwright:v1.61.1-noble
 
 # Sets argument as environmental variable (default value)
 ENV PLAYWRIGHT_FOLDERNAME=checkout/v5
@@ -14,4 +14,4 @@ RUN npm install
 RUN npx playwright install
 
 # Run command `npx playwright test $PLAYWRIGHT_FOLDERNAME`
-CMD npx playwright test /tests/${PLAYWRIGHT_FOLDERNAME} --reporter=list
+CMD ["npx", "playwright", "test", "/tests/${PLAYWRIGHT_FOLDERNAME}", "--reporter=list"]
