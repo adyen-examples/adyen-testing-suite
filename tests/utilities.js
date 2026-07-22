@@ -1,25 +1,32 @@
 const dotenv = require('dotenv');
 const { default: HmacValidator } = require('@adyen/api-library/lib/src/utils/hmacValidator');
 
+
 dotenv.config();
+
 
 module.exports = {
     /** Card number. */
     CARD_NUMBER: '4111 1111 1111 1111',
 
+
     /** Expiry Date. */
     EXPIRY_DATE: '03/30',
+
 
     /** CVC number. */
     CVC: '737',
 
+
     /** Cardholder name. */
     NAME_ON_CARD: 'J. Smith',
+
 
     /** valid AccountHolder id for AfP tests: use env variable to not expose valid Id */
     USERNAME: process.env.AFP_USERNAME || "na",
 
-    /** 
+
+    /**
      * Adyen Drop-in v6
      * Utility function to fill card details on the Adyen.Web.Component v6 - Sets default values automatically if you do not overwrite it manually.
      * See: https://docs.adyen.com/online-payments/build-your-integration/?platform=Web&integration=Components.
@@ -32,22 +39,25 @@ module.exports = {
      */
     async fillComponentCardDetailsV6(page, { cardNumber = this.CARD_NUMBER, expiryDate = this.EXPIRY_DATE, cvc = this.CVC, nameOnCard = this.NAME_ON_CARD} = {}) {
         // Find iframe and fill "Card number" field
-        const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
-        await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(cardNumber);
+        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).click();
+        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
+
 
         // Find iframe and fill "Expiry date" field
-        const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
-        await expiryDateFrame.getByPlaceholder('MM/YY').fill(expiryDate);
-
+        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).click();
+        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).fill(expiryDate);
+   
         // Find iframe and fill "CVC" field
-        const cvcFrame = await page.frameLocator('iframe[title*="security code"]');
-        await cvcFrame.getByPlaceholder('123').fill(cvc);
+        await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).click();
+        await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).fill(cvc);
+
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
         await page.getByPlaceholder('J. Smith').fill(nameOnCard);
     },
 
-    /** 
+
+    /**
      * Adyen Drop-in v6
      * Utility function to fill card details on the Adyen.Web.Dropin v6 - Sets default values automatically if you do not overwrite it manually.
      * See: https://docs.adyen.com/online-payments/build-your-integration/?platform=Web&integration=Drop-in.
@@ -60,29 +70,35 @@ module.exports = {
      */
     async fillDropinCardDetailsV6(page, { cardNumber = this.CARD_NUMBER, expiryDate = this.EXPIRY_DATE, cvc = this.CVC, nameOnCard = this.NAME_ON_CARD} = {}) {
         // Find iframe and fill "Card number" field
-        const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
-        await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(cardNumber);
+        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).click();
+        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
+
 
         // Find iframe and fill "Expiry date" field
-        const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
-        await expiryDateFrame.getByPlaceholder('MM/YY').fill(expiryDate);
-       
+        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).click();
+        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).fill(expiryDate);
+
+
         // Find iframe and fill "CVC" field
-        const cardRegion = await page.getByRole('region[name="Cards"i]'); 
+        const cardRegion = await page.getByRole('region[name="Cards"i]');
         if (await cardRegion.count() === 0) {
             // Handle drop-in
-            await page.frameLocator('iframe[title="Iframe for security code"]').getByPlaceholder('123').fill(cvc);
+            await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).click();
+            await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).fill(cvc);
         } else {
             // Handle drop-in when there are are multiple CVC fields with stored payment methods, we select the correct CVC field
-            await cardRegion.frameLocator('iframe[title*="security code"]').getByPlaceholder('123').fill(cvc); 
+            await cardRegion.frameLocator('iframe[title*="security code"]').getByPlaceholder('123').fill(cvc);
         }
+
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
         await page.getByPlaceholder('J. Smith').fill(nameOnCard);
     },
 
 
-    /** 
+
+
+    /**
      * Adyen Drop-in v5
      * Utility function to fill card details on the Adyen.Web.Component v5- Sets default values automatically if you do not overwrite it manually.
      * See: https://docs.adyen.com/online-payments/build-your-integration/?platform=Web&integration=Components.
@@ -98,19 +114,23 @@ module.exports = {
         const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
         await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(cardNumber);
 
+
         // Find iframe and fill "Expiry date" field
         const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
         await expiryDateFrame.getByPlaceholder('MM/YY').fill(expiryDate);
+
 
         // Find iframe and fill "CVC" field
         const cvcFrame = await page.frameLocator('iframe[title*="security code"]');
         await cvcFrame.getByPlaceholder('3 digits').fill(cvc);
 
+
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
         await page.getByPlaceholder('J. Smith').fill(nameOnCard);
     },
 
-    /** 
+
+    /**
      * Adyen Drop-in v5
      * Utility function to fill card details on the Adyen.Web.Dropin v5 - Sets default values automatically if you do not overwrite it manually.
      * See: https://docs.adyen.com/online-payments/build-your-integration/?platform=Web&integration=Drop-in.
@@ -126,34 +146,40 @@ module.exports = {
         const cardNumberFrame = await page.frameLocator('iframe[title*="card number"]');
         await cardNumberFrame.getByPlaceholder('1234 5678 9012 3456').fill(cardNumber);
 
+
         // Find iframe and fill "Expiry date" field
         const expiryDateFrame = await page.frameLocator('iframe[title*="expiry date"]');
         await expiryDateFrame.getByPlaceholder('MM/YY').fill(expiryDate);
        
         // Find iframe and fill "CVC" field
-        const cardRegion = await page.getByRole('region[name="Credit or debit card"i]'); 
+        const cardRegion = await page.getByRole('region[name="Credit or debit card"i]');
         if (await cardRegion.count() === 0) {
             // Handle drop-in
             await page.frameLocator('iframe[title="Iframe for security code"]').getByPlaceholder('3 digits').fill(cvc);
         } else {
             // Handle drop-in when there are are multiple CVC fields with stored payment methods, we select the correct CVC field
-            await cardRegion.frameLocator('iframe[title*="security code"]').getByPlaceholder('3 digits').fill(cvc); 
+            await cardRegion.frameLocator('iframe[title*="security code"]').getByPlaceholder('3 digits').fill(cvc);
         }
+
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
         await page.getByPlaceholder('J. Smith').fill(nameOnCard);
     },
 
+
     /** Utility function to calculate HMAC signature (using Adyen NodeJS library)
     */
     async calculateHmacSignature(notificationRequestItem) {
+
 
         const hmacKey = process.env.ADYEN_HMAC_KEY;
         if(!hmacKey) {
             throw Error("HMAC_KEY is undefined")
         }
 
+
         return new HmacValidator().calculateHmac(notificationRequestItem, hmacKey);
     }
+
 
 };
