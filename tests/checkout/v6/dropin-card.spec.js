@@ -18,11 +18,8 @@ test('Dropin Card', async ({ page }) => {
     // Wait for load event
     await page.waitForLoadState('load');
     
-    // Assert that "Cards" is visible
-    await expect(page.locator('text="Cards"')).toBeVisible();
-
     // Click "Cards"
-    const radioButton = await page.getByRole('radio', { name: 'Cards' });
+    const radioButton = await page.getByRole('radio', { name: 'Credit or debit card' });
     await radioButton.click();
 
     // Wait for load event
