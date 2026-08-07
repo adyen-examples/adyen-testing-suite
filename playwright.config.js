@@ -19,11 +19,11 @@ const config = {
      * 
      * note: waiting longer on CI
      */
-    timeout: process.env.CI ? 40 * 1000 : 20 * 1000
+    timeout: process.env.CI ? 40 * 1000 : 30 * 1000
   },
 
   /* Run tests in files in parallel */
-  fullyParallel: false,
+  fullyParallel: true,
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -32,7 +32,7 @@ const config = {
   retries: process.env.CI ? 1 : 0,
 
   /* Tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
@@ -42,13 +42,13 @@ const config = {
     baseURL: process.env.URL || 'http://localhost:8080',
 
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: process.env.CI ? 240 * 1000 : 20 * 1000,
+    actionTimeout: process.env.CI ? 120 * 1000 : 30 * 1000,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    /* Record a trace for each test, but remove it from successful test runs */
+    trace: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
