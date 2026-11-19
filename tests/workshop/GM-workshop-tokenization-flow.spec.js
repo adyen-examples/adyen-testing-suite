@@ -6,6 +6,7 @@ const utilities = require('../utilities');
 /** @typedef {import('@playwright/test').Response} Response */
 
 test.describe('Workshop - Subscription Tokenization Flow', () => {
+    // The application stores one subscription token in shared server memory.
     test.describe.configure({ mode: 'serial' });
 
     test.beforeEach(async ({ page }) => {
@@ -15,6 +16,7 @@ test.describe('Workshop - Subscription Tokenization Flow', () => {
             return;
         }
 
+        // Clear any token left by a previous test run.
         await expect(page.getByRole('button', { name: 'Charge Subscription' })).toBeEnabled();
         await cancelSubscription(page);
     });
@@ -40,6 +42,7 @@ test.describe('Workshop - Subscription Tokenization Flow', () => {
         await chargeSubscription(page);
         await cancelSubscription(page);
 
+        // The UI disables charging without a token, so verify the backend response directly.
         const response = await page.request.post('/api/subscription-payment');
         expect(response.status()).toBe(409);
     });
@@ -49,6 +52,7 @@ test.describe('Workshop - Subscription Tokenization Flow', () => {
  * @param {Page} page
  */
 async function createSubscription(page) {
+    // Open subscription checkout and select the card payment method.
     await goToSubscriptions(page);
     await page.getByRole('button', { name: 'Create Subscription' }).click();
     await expect(page).toHaveURL(/\/checkout\?flow=subscription(?:&|$)/);
@@ -56,6 +60,7 @@ async function createSubscription(page) {
     await page.getByRole('radio', { name: 'Credit or debit card' }).click();
     await utilities.fillWorkshopCardDetailsV641(page);
 
+    // Wait for the zero-value tokenization request to complete.
     const createResponsePromise = page.waitForResponse(response =>
         isPostTo(response, '/api/subscription-create')
     );
@@ -68,6 +73,7 @@ async function createSubscription(page) {
 
     // Give the authorization webhook time to store the subscription token.
     await page.waitForTimeout(500);
+    // Return to the subscription controls after checkout.
     await goToSubscriptions(page);
 }
 
@@ -76,6 +82,7 @@ async function createSubscription(page) {
  */
 async function goToSubscriptions(page) {
     await page.goto('/');
+    // Use the workshop navigation link to reach subscriptions.
     await page.getByRole('link', { name: 'Go to subscriptions' }).click();
     await expect(page).toHaveURL(/\/subscriptions(?:[?#]|$)/);
 }
@@ -84,6 +91,7 @@ async function goToSubscriptions(page) {
  * @param {Page} page
  */
 async function returnHomeFromSubscriptionsResult(page) {
+    // Return home before starting the next subscription operation.
     const returnHomeButton = page.getByRole('link', { name: 'Return Home' });
     await expect(returnHomeButton).toBeVisible();
     await returnHomeButton.click();
@@ -96,6 +104,7 @@ async function returnHomeFromSubscriptionsResult(page) {
 async function chargeSubscription(page) {
     await goToSubscriptions(page);
 
+    // Confirm the charge request succeeds before checking its result page.
     const paymentResponsePromise = page.waitForResponse(response =>
         isPostTo(response, '/api/subscription-payment')
     );
@@ -113,6 +122,7 @@ async function chargeSubscription(page) {
 async function cancelSubscription(page) {
     await goToSubscriptions(page);
 
+    // Confirm the cancellation request succeeds before checking its result page.
     const cancelResponsePromise = page.waitForResponse(response =>
         isPostTo(response, '/api/subscription-cancel')
     );
