@@ -39,13 +39,13 @@ module.exports = {
      */
     async fillComponentCardDetailsV6(page, { cardNumber = this.CARD_NUMBER, expiryDate = this.EXPIRY_DATE, cvc = this.CVC, nameOnCard = this.NAME_ON_CARD} = {}) {
         // Find iframe and fill "Card number" field
-        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).click();
-        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
+        await page.getByRole('form').locator('iframe[title$="card number" i]').contentFrame().getByRole('textbox', { name: 'Card number' }).click();
+        await page.getByRole('form').locator('iframe[title$="card number" i]').contentFrame().getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
 
 
         // Find iframe and fill "Expiry date" field
-        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).click();
-        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).fill(expiryDate);
+        await page.getByRole('form').locator('iframe[title$="expiry date" i]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).click();
+        await page.getByRole('form').locator('iframe[title$="expiry date" i]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).fill(expiryDate);
    
         // Find iframe and fill "CVC" field
         await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).click();
@@ -70,21 +70,21 @@ module.exports = {
      */
     async fillDropinCardDetailsV6(page, { cardNumber = this.CARD_NUMBER, expiryDate = this.EXPIRY_DATE, cvc = this.CVC, nameOnCard = this.NAME_ON_CARD} = {}) {
         // Find iframe and fill "Card number" field
-        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).click();
-        await page.getByRole('form').locator('iframe[title="Iframe for card number"]').contentFrame().getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
+        await page.getByRole('form').locator('iframe[title$="card number" i]').contentFrame().getByRole('textbox', { name: 'Card number' }).click();
+        await page.getByRole('form').locator('iframe[title$="card number" i]').contentFrame().getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
 
 
         // Find iframe and fill "Expiry date" field
-        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).click();
-        await page.getByRole('form').locator('iframe[title="Iframe for expiry date"]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).fill(expiryDate);
+        await page.getByRole('form').locator('iframe[title$="expiry date" i]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).click();
+        await page.getByRole('form').locator('iframe[title$="expiry date" i]').contentFrame().getByRole('textbox', { name: 'Expiry date' }).fill(expiryDate);
 
 
         // Find iframe and fill "CVC" field
         const cardRegion = await page.getByRole('region[name="Cards"i]');
         if (await cardRegion.count() === 0) {
             // Handle drop-in
-            await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).click();
-            await page.getByRole('form').locator('iframe[title="Iframe for security code"]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).fill(cvc);
+            await page.getByRole('form').locator('iframe[title$="security code" i]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).click();
+            await page.getByRole('form').locator('iframe[title$="security code" i]').contentFrame().getByRole('textbox', { name: 'CVV/CVC' }).fill(cvc);
         } else {
             // Handle drop-in when there are are multiple CVC fields with stored payment methods, we select the correct CVC field
             await cardRegion.frameLocator('iframe[title*="security code"]').getByPlaceholder('123').fill(cvc);
@@ -92,7 +92,7 @@ module.exports = {
 
 
         // Find and fill "Name on card" field - Note: this field is not contained within an iframe
-        await page.getByPlaceholder('J. Smith').fill(nameOnCard);
+        await page.getByRole('textbox', { name: 'Name on card' }).fill(nameOnCard);
     },
 
 
