@@ -25,6 +25,148 @@ module.exports = {
     /** valid AccountHolder id for AfP tests: use env variable to not expose valid Id */
     USERNAME: process.env.AFP_USERNAME || "na",
 
+    /**
+     * Fill the workshop's Adyen Web 6.4.1 card fields and any rendered billing-address fields.
+     * This helper is independent of the other card-fill utilities in this module.
+     * @param {import('@playwright/test').Page} page
+     * @param {{
+     *   cardNumber?: string,
+     *   expiryDate?: string,
+     *   cvc?: string,
+     *   nameOnCard?: string,
+     *   billingAddress?: {
+     *     country?: string,
+     *     postalCode?: string,
+     *     city?: string,
+     *     region?: string,
+     *     street?: string,
+     *     houseNumber?: string,
+     *     firstName?: string,
+     *     lastName?: string
+     *   }
+     * }} options
+     */
+    async fillWorkshopCardDetailsV641(page, options = {}) {
+        const {
+            cardNumber = '4111 1111 1111 1111',
+            expiryDate = '03/30',
+            cvc = '737',
+            nameOnCard = 'J. Smith',
+            billingAddress = {},
+        } = options;
+        const address = {
+            country: billingAddress.country || 'NL',
+            postalCode: billingAddress.postalCode || '1011AB',
+            city: billingAddress.city || 'Amsterdam',
+            region: billingAddress.region || 'North Holland',
+            street: billingAddress.street || '123 Test Street',
+            houseNumber: billingAddress.houseNumber || '123',
+            firstName: billingAddress.firstName || 'Test',
+            lastName: billingAddress.lastName || 'Cardholder',
+        };
+
+        await page.frameLocator('iframe[title="Card number"]')
+            .getByRole('textbox', { name: 'Card number' })
+            .fill(cardNumber);
+        await page.frameLocator('iframe[title="Expiry date"]')
+            .getByRole('textbox', { name: 'Expiry date' })
+            .fill(expiryDate);
+        await page.frameLocator('iframe[title="Security code"]')
+            .getByRole('textbox', { name: 'CVV/CVC' })
+            .fill(cvc);
+
+        const controls = page.locator('#payment input, #payment select, #payment textarea');
+        const discoveredFields = [];
+
+        for (let index = 0; index < await controls.count(); index += 1) {
+            const control = controls.nth(index);
+            if (!(await control.isVisible())) {
+                continue;
+            }
+
+            const metadata = await control.evaluate(element => ({
+                tagName: element.tagName.toLowerCase(),
+                description: [
+                    element.getAttribute('aria-label'),
+                    element.getAttribute('placeholder'),
+                    element.getAttribute('name'),
+                    element.getAttribute('autocomplete'),
+                    element.getAttribute('title'),
+                    element.labels ? Array.from(element.labels).map(label => label.innerText).join(' ') : '',
+                ].filter(Boolean).join(' ').toLowerCase(),
+            }));
+            discoveredFields.push({ index, ...metadata });
+        }
+
+        const holderFields = discoveredFields.filter(field =>
+            /card.?holder|holder.?name|name.?on.?card/i.test(field.description) ||
+            field.description.includes(nameOnCard.toLowerCase())
+        );
+        if (holderFields.length !== 1) {
+            throw new Error(`Expected one visible cardholder-name field, found ${holderFields.length}.`);
+        }
+        await controls.nth(holderFields[0].index).fill(nameOnCard);
+
+        const billingFields = [
+            { pattern: /country/, value: address.country, isCountry: true },
+            { pattern: /postal|zip/, value: address.postalCode },
+            { pattern: /city|locality|address.level2/, value: address.city },
+            { pattern: /state|province|region|address.level1/, value: address.region },
+            { pattern: /street|address/, value: address.street },
+            { pattern: /house.?number/, value: address.houseNumber },
+            { pattern: /first.?name|given.?name/, value: address.firstName },
+            { pattern: /last.?name|family.?name/, value: address.lastName },
+        ];
+        let filledBillingFields = 0;
+
+        for (const field of discoveredFields) {
+            if (/card.?holder|holder.?name|name.?on.?card/i.test(field.description)) {
+                continue;
+            }
+
+            const addressField = billingFields.find(candidate => candidate.pattern.test(field.description));
+            if (!addressField) {
+                continue;
+            }
+
+            const control = controls.nth(field.index);
+            if (addressField.isCountry && field.tagName !== 'select') {
+                await control.fill('Netherlands');
+                await page.getByRole('listbox').waitFor({ state: 'visible' });
+
+                const countryOption = page.getByRole('option', { name: 'Netherlands', exact: true });
+                await countryOption.waitFor({ state: 'visible' });
+                await countryOption.click();
+            } else if (field.tagName === 'select') {
+                const options = await control.locator('option').evaluateAll(elements => elements.map(option => ({
+                    value: option.value,
+                    label: option.label,
+                })));
+                const matchingOption = addressField.isCountry
+                    ? options.find(option =>
+                        option.value.toLowerCase() === address.country.toLowerCase() ||
+                        /netherlands/i.test(option.label)
+                    )
+                    : options.find(option =>
+                        option.value.toLowerCase() === addressField.value.toLowerCase() ||
+                        option.label.toLowerCase().includes(addressField.value.toLowerCase())
+                    );
+
+                if (!matchingOption) {
+                    throw new Error(`No matching option was rendered for billing field "${field.description}".`);
+                }
+                await control.selectOption(matchingOption.value);
+            } else {
+                await control.fill(addressField.value);
+            }
+
+            filledBillingFields += 1;
+        }
+
+        if (filledBillingFields === 0) {
+            throw new Error('Billing address is required, but no recognizable visible billing fields were rendered.');
+        }
+    },
 
     /**
      * Adyen Drop-in v6
