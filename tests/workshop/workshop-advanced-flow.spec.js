@@ -27,7 +27,7 @@ test('Workshop - Advanced Flow Payment', async ({ page }) => {
     await page.waitForLoadState('load');
 
     // Fill card details
-    await utilities.fillDropinCardDetailsV6(page, { nameOnCard: 'Andrés Gustavo Muñoz Dávila' });
+    await utilities.fillDropinCardDetailsV6(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');

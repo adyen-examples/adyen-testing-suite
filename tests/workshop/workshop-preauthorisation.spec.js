@@ -41,7 +41,7 @@ test('Workshop - Pre-Authorisation - Pre-authorise, adjust the amount and captur
     await expect(page.locator('text="Credit or debit card"')).toBeVisible();
     await page.getByRole('radio', { name: 'Credit or debit card' }).click();
     await page.waitForLoadState('load');
-    await utilities.fillDropinCardDetailsV6(page, { nameOnCard: 'Andrés Gustavo Muñoz Dávila' });
+    await utilities.fillDropinCardDetailsV6(page);
 
     // Click "Pay"
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
