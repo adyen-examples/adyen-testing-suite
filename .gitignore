@@ -7,3 +7,13 @@ playwright-report/
 
 .env
 .idea
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# local recordings
+recordings/
+test-results-recording/

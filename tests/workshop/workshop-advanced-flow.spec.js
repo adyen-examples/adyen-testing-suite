@@ -6,7 +6,8 @@ test('Workshop - Advanced Flow Payment', async ({ page }) => {
     await page.goto('/');
 
     // Select "Drop-in"
-    await expect(page.locator('text="Start shopping"')).toBeVisible();
+    await 
+    expect(page.locator('text="Start shopping"')).toBeVisible();
     await page.getByRole('link', { name: 'Start shopping' }).click();
 
     // Click "Continue to checkout"
@@ -26,12 +27,19 @@ test('Workshop - Advanced Flow Payment', async ({ page }) => {
     await page.waitForLoadState('load');
 
     // Fill card details
-    await utilities.fillDropinCardDetails(page);
+    await utilities.fillDropinCardDetailsV6(page);
 
     // Click "Pay" button
     const payButton = page.locator('.adyen-checkout__button__text >> visible=true');
     await expect(payButton).toBeVisible();
     await payButton.click();
 
-    await expect(page.locator('text="Return Home"')).toBeVisible();
+    // "Return Home" is shown for every result, so check that the payment really succeeded
+    await expect(page).toHaveURL(/\/result\/success/);
+    await expect(page.getByText('Your order has been successfully placed.')).toBeVisible();
+
+    // Only when recording a video: keep the success page on screen for a few seconds
+    if (process.env.RECORD) {
+        await page.waitForTimeout(4000);
+    }
 });
